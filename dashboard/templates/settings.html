@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Test</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link href="../assets/client/css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link href="achmea.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="http://demos.jquerymobile.com/1.4.5/js/jquery.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head>
+<body>
+
+<div data-role="page" id="settings">
+	<div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+		<img class="logo" border="0" src="https://www.achmea.nl/Style%20Library/achmea/images/achmea_logo.png"/>Home
+	</div>
+
+	<div role="main">
+		<ul class="mobile-list" data-role="listview">
+			<li><a href="#settings-rooms" data-transition="slide"><i class="fa fa-bed"></i>Kamers</a></li>
+			<li><a href="#" data-transition="slide"><i class="fa fa-square-o"></i>Tegels</a></li>
+			<li><a href="#" data-transition="slide"><i class="fa fa-code"></i>Software</a></li>
+		</ul>
+	</div>
+
+	<div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="home.html"><i class="fa fa-home"></i></a></li>
+				<li><a href="statistics"><i class="fa fa-bar-chart"></i></a></li>
+				<li><a href="settings.html" class="ui-btn-active"><i class="fa fa-cog"></i></a></li>
+				<li><a href="help"><i class="fa fa-question"></i></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div data-role="page" id="settings-rooms" data-theme="a">
+	<div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+		<a class="ui-btn back-button" href="/" data-rel="back" data-direction="reverse"><i class="fa fa-chevron-left"></i>
+			Terug</a>
+		<h1>Kamers</h1>
+	</div>
+
+	<div role="main">
+		<ul class="mobile-list" data-role="listview">
+			<li><a href="#settings-room" data-transition="slide"><i class="fa fa-bed"></i>Kamer 1</a></li>
+			<li><a href="#"><i class="fa fa-square-o"></i>Kamer 2</a></li>
+			<li><a href="#"><i class="fa fa-code"></i>Kamer 3</a></li>
+		</ul>
+	</div>
+
+	<div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="home.html"><i class="fa fa-home"></i></a></li>
+				<li><a href="statistics"><i class="fa fa-bar-chart"></i></a></li>
+				<li><a href="settings.html" class="ui-btn-active"><i class="fa fa-cog"></i></a></li>
+				<li><a href="help"><i class="fa fa-question"></i></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div data-role="page" id="settings-room" data-theme="a">
+	<div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+		<a class="ui-btn back-button" href="/" data-rel="back" data-direction="reverse"><i class="fa fa-chevron-left"></i>
+			Terug</a>
+		<h1>Kamer 1</h1>
+	</div>
+
+	<div role="main">
+		<div class="mobile-list" data-role="listview" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+			    <h4>Heading</h4>
+			    <ul data-role="listview" data-inset="false">
+			        <li><a href="#four"><i class="fa fa-plug sensor-active"></i>Sensor 1</a></li>
+			        <li><a href="#four"><i class="fa fa-plug sensor-active"></i>Sensor 1</a></li>
+			        <li><a href="#four"><i class="fa fa-plug sensor-active"></i>Sensor 1</a></li>
+			    </ul>
+		</div>
+		<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+			    <h4>Heading</h4>
+			    <ul data-role="listview" data-inset="false">
+			        <li>Read-only list item 1</li>
+			        <li>Read-only list item 2</li>
+			        <li>Read-only list item 3</li>
+			    </ul>
+		</div>
+	</div>
+
+	<div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="home.html"><i class="fa fa-home"></i></a></li>
+				<li><a href="statistics"><i class="fa fa-bar-chart"></i></a></li>
+				<li><a href="settings.html" class="ui-btn-active"><i class="fa fa-cog"></i></a></li>
+				<li><a href="help"><i class="fa fa-question"></i></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

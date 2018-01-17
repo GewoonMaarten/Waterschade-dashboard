@@ -1,0 +1,142 @@
+body {
+    overflow: hidden !important;
+}
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+.back-button {
+    margin-top: 3px !important;
+}
+.back-button i {
+    width: auto;
+}
+.header {
+    height: 50px;
+}
+.mobile-list a i {
+    width: 20px;
+}
+.logo {
+    margin: 8px;
+}
+#content {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.panel-button-container {
+    margin-top: 4px;
+    margin-bottom: 0;
+    height: 150px;
+    display: inline-block;
+    width: 49.30%;
+    text-align: center;
+    vertical-align: top;
+
+    background-color: #f6f6f6;
+    color: #333;
+    text-shadow: 0 1px 0 #f3f3f3;
+}
+.panel-no-button {
+    border: 1px solid #ddd;
+}
+.panel-button {
+    height: 100% !important;
+    margin: 0;
+}
+.panel-button i {
+    font-size: 50px;
+}
+.footer a i {
+    font-size: 25px;
+}
+.sensor-active {
+    color: #009688;
+}
+.sensor-inactive {
+    color: #F44336;
+}
+.slide.in, .slide.out {
+    -webkit-animation-timing-function: ease-in-out;
+    -webkit-animation-duration: 800ms !important;
+}
+#time {
+    display: block;
+    font-size: 50px;
+}
+#date, #full-date {
+    font-size: 15px;
+    display: block;
+}
+.sensor-icon {
+    background: url('https://d30y9cdsu7xlg0.cloudfront.net/png/106632-200.png') center center;
+    background-size: cover;
+    width: 75px;
+    height: 75px;
+    display: inline-block;
+}
+.sensor-icon.active {
+    background: url('img/sensor-green.png') center center;
+    background-size: cover;
+}
+.sensor-icon.inactive {
+    background: url('img/sensor-red.png') center center;
+    background-size: cover;
+}
+#weather-container, #date-container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#weather-container i {
+
+}
+h4, .h4 {
+    margin: 5px;
+}
+.icon-text {
+    display: inline;
+    font-size: 50px;
+    margin-left: 5px;
+    font-weight: normal;
+}
+.fa-cloud {
+    color: #03A9F4;
+}
+.edit-button {
+    font-size: 20px !important;
+    padding: 4px 8px;
+}
+#online-help-container {
+    margin-bottom: 30px;
+}
+.ui-page {
+    height: calc(100% - 42.5px);
+}
+.room-tools a {
+    position:absolute;
+    width:60px;
+    height:60px;
+    bottom:10px;
+    right:10px;
+    background-color:#009688;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
+}
+.room-tools a:hover {
+    background-color: #26A69A;
+    color: #FFF;
+}
+.room-tools i {
+    margin-top:22px;
+}
+#edit-sensor-button {
+
+}
+.ui-slider {
+    position: absolute;
+    right: 4px;
+    top: -3px !important;
+}
