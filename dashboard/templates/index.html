@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Test 1</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link href="/static/css/achmea.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="http://demos.jquerymobile.com/1.4.5/js/jquery.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="/static/js/main.js"></script>
+</head>
+<body>
+<div id="container">
+	<div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+		<img class="logo" border="0" src="https://www.achmea.nl/Style%20Library/achmea/images/achmea_logo.png"/>
+	</div>
+
+	<div id="home" data-role="page">
+		<div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+			<img class="logo" border="0" src="https://www.achmea.nl/Style%20Library/achmea/images/achmea_logo.png"/>
+		</div>
+		<div id="content" class="container">
+
+      <div data-role="fieldcontain">
+        <label for="checkbox-based-flipswitch">Checkbox-based:</label>
+          <input type="checkbox" id="checkbox-based-flipswitch" data-role="flipswitch">
+      </div>
+			<div class="row">
+				<div class="panel-button-container panel-no-button">
+					<div id="date-container">
+						<span id="time"></span>
+						<span id="date"></span>
+						<span id="full-date"></span>
+					</div>
+				</div>
+				<div class="panel-button-container">
+					<div class="ui-btn panel-button"><i class="sensor-icon active"></i><h4 id="sensor-count">4 Sensoren actief</h4></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="panel-button-container">
+					<div class="ui-btn panel-button">
+						<h4 style="color: transparent;">Hi</h4>
+						<i class="fa fa-home"></i>
+					</div>
+				</div>
+				<div class="panel-button-container">
+					<div class="ui-btn panel-button">
+						<h4>Schade gevallen</h4>
+						<i class="fa fa-tint"></i>
+						<span id="damage-occurrences" class="icon-text">3</span>
+						<h4>November 2017</h4>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="panel-button-container">
+					<div class="ui-btn panel-button">
+						<h4>Amersfoort</h4><i class="fa fa-cloud"></i><h4 id="temperature">15°C</h4>
+					</div>
+				</div>
+				<div class="panel-button-container">
+					<div class="ui-btn panel-button">
+						<h4 style="color: transparent;">Hi</h4>
+						<i class="fa fa-info-circle"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home" class="ui-btn-active"><i class="fa fa-home"></i></a></li>
+					<li><a href="#statistics"><i class="fa fa-bar-chart"></i></a></li>
+					<li><a href="#settings"><i class="fa fa-cog"></i></a></li>
+					<li><a href="#help"><i class="fa fa-question"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div data-role="page" id="settings">
+		<div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+			<img class="logo" border="0" src="https://www.achmea.nl/Style%20Library/achmea/images/achmea_logo.png"/>
+		</div>
+
+		<div role="main">
+			<ul class="mobile-list" data-role="listview">
+				<li><a href="#settings-rooms" data-transition="slide"><i class="fa fa-bed"></i>Kamers</a></li>
+				<li><a href="#settings-ice" data-transition="slide"><i class="fa fa-bed"></i>ICE</a></li>
+				<li><a href="#" data-transition="slide"><i class="fa fa-square-o"></i>Tegels</a></li>
+				<li><a href="#" data-transition="slide"><i class="fa fa-code"></i>Software</a></li>
+			</ul>
+		</div>
+
+		<div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home"><i class="fa fa-home"></i></a></li>
+					<li><a href="#statistics"><i class="fa fa-bar-chart"></i></a></li>
+					<li><a href="#settings" class="ui-btn-active"><i class="fa fa-cog"></i></a></li>
+					<li><a href="#help"><i class="fa fa-question"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div data-role="page" id="settings-rooms" data-theme="a">
+		<div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+			<a class="ui-btn back-button" href="/" data-rel="back" data-direction="reverse"><i class="fa fa-chevron-left"></i>
+				Terug</a>
+			<h1>Kamers</h1>
+		</div>
+
+		<div role="main">
+			<ul class="mobile-list" data-role="listview"></ul>
+		</div>
+
+		<div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home"><i class="fa fa-home"></i></a></li>
+					<li><a href="#statistics"><i class="fa fa-bar-chart"></i></a></li>
+					<li><a href="#settings" class="ui-btn-active"><i class="fa fa-cog"></i></a></li>
+					<li><a href="#help"><i class="fa fa-question"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div data-role="page" id="settings-ice" data-theme="a">
+		<div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+			<a class="ui-btn back-button" href="/" data-rel="back" data-direction="reverse"><i class="fa fa-chevron-left"></i>
+				Terug</a>
+			<h1>ICE</h1>
+		</div>
+
+		<div role="main">
+			<ul class="mobile-list" data-role="listview">
+				<li data-icon="false">
+					<a>
+						<i class="fa fa-envelope"></i>Emails
+						<select name="slider2" id="slider2" data-role="slider">
+							<option value="off">Off</option>
+							<option value="on">On</option>
+						</select>
+					</a>
+				</li>
+				<li data-icon="false">
+					<a>
+						<i class="fa fa-phone"></i>Telefoonnummers
+						<select name="slider2" id="slider3" data-role="slider">
+							<option value="off">Off</option>
+							<option value="on">On</option>
+						</select>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home"><i class="fa fa-home"></i></a></li>
+					<li><a href="#statistics"><i class="fa fa-bar-chart"></i></a></li>
+					<li><a href="#settings" class="ui-btn-active"><i class="fa fa-cog"></i></a></li>
+					<li><a href="#help"><i class="fa fa-question"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div data-role="page" id="settings-room" data-theme="a">
+		<div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+			<a class="ui-btn back-button" href="/" data-rel="back" data-direction="reverse"><i class="fa fa-chevron-left"></i>Terug</a>
+			<h1 id="room-title">Kamer 1</h1>
+			<a id="edit-sensor-button" href="#" class="ui-btn edit-button"><i class="fa fa-pencil-square-o"></i></a>
+		</div>
+
+        <div role="main">
+			<ul id="sensors" class="mobile-list" data-role="listview"></ul>
+		</div>
+
+		<div class="room-tools">
+			<a href="#"><i class="fa fa-plus"></i></a>
+		</div>
+
+		<div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home"><i class="fa fa-home"></i></a></li>
+					<li><a href="#statistics"><i class="fa fa-bar-chart"></i></a></li>
+					<li><a href="#settings" class="ui-btn-active"><i class="fa fa-cog"></i></a></li>
+					<li><a href="#help"><i class="fa fa-question"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div data-role="page" id="help">
+		<div class="header" data-role="header" data-position="fixed" data-tap-toggle="false">
+			<img class="logo" border="0" src="https://www.achmea.nl/Style%20Library/achmea/images/achmea_logo.png"/>
+		</div>
+
+		<div role="main">
+			<div id="online-help-container" class="ui-body ui-body-a ui-corner-all">
+				<h3>Online hulp</h3>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse accumsan blandit
+					fermentum. Pellentesque cursus mauris purus, auctor commodo mi ullamcorper nec.
+				</p>
+				<button class="ui-btn">Bezoek de website</button>
+			</div>
+
+			<div class="ui-body ui-body-a ui-corner-all">
+				<h3>Bel ons</h3>
+				<p>
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse accumsan blandit
+					fermentum. Pellentesque cursus mauris purus, auctor commodo mi ullamcorper nec.
+				</p>
+				<button class="ui-btn"><i class="fa fa-phone"></i> Bel 0900 1234 5678</button>
+			</div>
+		</div>
+
+		<div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#home"><i class="fa fa-home"></i></a></li>
+					<li><a href="#statistics"><i class="fa fa-bar-chart"></i></a></li>
+					<li><a href="#settings"><i class="fa fa-cog"></i></a></li>
+					<li><a href="#help" class="ui-btn-active"><i class="fa fa-question"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
