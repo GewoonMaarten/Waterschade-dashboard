@@ -1,63 +1,23 @@
 import json
 
 from flask import Flask
-from flask import render_template
+from flask import render_template, abort, Blueprint
+from jinja2 import TemplateNotFound
+
+from controller.rooms_controller import api_rooms_blueprint
+from controller.devices_controller import api_devices_blueprint
 
 app = Flask(__name__)
 
+app.register_blueprint(api_rooms_blueprint, url_prefix="/api")
+app.register_blueprint(api_devices_blueprint, url_prefix="/api")
 
 @app.route('/')
 def index():
-    return render_template('index.html')
-
-
-@app.route('/sensors/get')
-def get_unnamed_sensors():
-    # get all unnamed sensors from the database
-
-    # dummy data
-    sensors = [
-        {
-            'id': 1
-        }
-    ]
-    return json.dumps(sensors)
-
-
-@app.route('/rooms')
-def get_rooms():
-    rooms = [
-        {
-            'id': 3,
-            'name': 'Hallo jumbo'
-        },
-        {
-            'id': 5,
-            'name': 'Hoogvliet altijd nummer 1'
-        }
-    ]
-    return json.dumps(rooms)
-
-
-@app.route('/rooms/<string:room_id>/sensors')
-def get_room_sensors(room_id):
-    # TODO Get sensors for argued room id
-
-    # dummy data
-    sensors = [
-        {
-            'id': 'Hallo',
-            'name': 'Idk sensor',
-            'status': 0
-        },
-        {
-            'id': 'FF29DF',
-            'name': 'Tweede sensor',
-            'status': 1
-        }
-    ]
-    return json.dumps(sensors)
-
+    try:
+        return render_template('index.html')
+    except TemplateNotFound:
+        abort(404)
 
 if __name__ == '__main__':
     app.debug = True
