@@ -1,38 +1,20 @@
 import json
 
-from flask import Blueprint
+from flask import Blueprint, Response
+from persistency.rooms_DAO import Rooms_DAO
+from persistency.devices_DAO import Devices_DAO
 
 api_rooms_blueprint = Blueprint('api-rooms', __name__, )
 
+rooms_DAO = Rooms_DAO('C:\\Users\\Maarten\\Documents\\School\\2018\\Waterschade-dashboard\\database.db')
+device_DAO = Devices_DAO('C:\\Users\\Maarten\\Documents\\School\\2018\\Waterschade-dashboard\\database.db')
+
 @api_rooms_blueprint.route("/rooms")
 def get_rooms():
-    rooms = [
-        {
-            'id': 3,
-            'name': 'Hallo jumbo'
-        },
-        {
-            'id': 5,
-            'name': 'Hoogvliet altijd nummer 1'
-        }
-    ]
-    return json.dumps(rooms)
+    data = json.dumps(rooms_DAO.get_rooms())
+    return Response(data, mimetype='application/json')
 
 @api_rooms_blueprint.route('/rooms/<string:room_id>/sensors')
 def get_room_sensors(room_id):
-    # TODO Get sensors for argued room id
-
-    # dummy data
-    sensors = [
-        {
-            'id': 'Hallo',
-            'name': 'Idk sensor',
-            'status': 0
-        },
-        {
-            'id': 'FF29DF',
-            'name': 'Tweede sensor',
-            'status': 1
-        }
-    ]
-    return json.dumps(sensors)
+    data = json.dumps(device_DAO.get_devices_by_room_id(room_id))
+    return Response(data, mimetype='application/json')

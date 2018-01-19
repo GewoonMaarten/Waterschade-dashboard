@@ -34,8 +34,7 @@ $(function() {
                 $('#temperature').text(random() + '°C');
                 break;
             case 'settings-rooms':
-                $.get('/rooms', function(result) {
-                    var json = JSON.parse(result);
+                $.get('/api/rooms', function(json) {
                     var list = $('#settings-rooms').find('.mobile-list');
                     list.empty();
                     for(var i in json) {
@@ -48,8 +47,7 @@ $(function() {
                 });
                 break;
             case 'settings-room':
-                $.get('/rooms/' + user_data.room + '/sensors', function(result) {
-                    var json = JSON.parse(result);
+                $.get('/api/rooms/' + user_data.room + '/sensors', function(json) {
                     var list = $('#sensors');
                     list.empty();
                     for(var i in json) {
