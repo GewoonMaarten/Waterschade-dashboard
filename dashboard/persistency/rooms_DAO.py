@@ -13,7 +13,8 @@ class Rooms_DAO(object):
                 self.conn.row_factory = sqlite3.Row
                 self.cur = self.conn.cursor()
         except Error as e:
-           print(e)
+           # TODO implement logging - app.logger.Error(e)
+           pass
 
 
     def get_rooms(self):
@@ -27,7 +28,8 @@ class Rooms_DAO(object):
                 rooms_list.append(dict(itertools.izip(row.keys(), row)))
             return rooms_list
         except Exception as e:
-            print('Error: ', e)
+            # TODO implement logging - app.logger.Error(e)
+            pass
 
     def __del__(self):
         self.conn.close()

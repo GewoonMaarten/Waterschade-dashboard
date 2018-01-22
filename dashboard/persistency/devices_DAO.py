@@ -13,7 +13,7 @@ class Devices_DAO(object):
                 self.conn.row_factory = sqlite3.Row
                 self.cur = self.conn.cursor()
         except Error as e:
-           print(e)
+           # TODO implement logging - app.logger.Error(e)
 
 
     def get_devices_by_room_id(self, room_id):
@@ -27,7 +27,7 @@ class Devices_DAO(object):
                 devices_list.append(dict(itertools.izip(row.keys(), row)))
             return devices_list
         except Exception as e:
-            print('Error: ', e)
+            # TODO implement logging - app.logger.Error(e)
 
     def __del__(self):
         self.conn.close()
