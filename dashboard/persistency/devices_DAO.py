@@ -13,8 +13,8 @@ class Devices_DAO(object):
                 self.conn.row_factory = sqlite3.Row
                 self.cur = self.conn.cursor()
         except Error as e:
-           # TODO implement logging - app.logger.Error(e)
-
+            # TODO implement logging - app.logger.Error(e)
+            pass
 
     def get_devices_by_room_id(self, room_id):
         try:
@@ -28,6 +28,7 @@ class Devices_DAO(object):
             return devices_list
         except Exception as e:
             # TODO implement logging - app.logger.Error(e)
-
+            pass
+            
     def __del__(self):
         self.conn.close()

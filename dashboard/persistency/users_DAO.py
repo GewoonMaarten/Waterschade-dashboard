@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-class User_DAO:
+class Users_DAO(object):
     'Database access object for the user table.'
 
     def __init__(self, path):
