@@ -1,10 +1,6 @@
 import json
-
 from flask import Blueprint, Response
-from persistency.rooms_DAO import Rooms_DAO
-from persistency.devices_DAO import Devices_DAO
-
-from persistency.facade.service import Service as Persistency_service
+from data.dashboard_persistency.facade.service import Service as Persistency_service
 
 api_rooms_blueprint = Blueprint('api-rooms', __name__)
 

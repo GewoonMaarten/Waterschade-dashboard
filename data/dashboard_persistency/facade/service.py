@@ -1,5 +1,5 @@
-from persistency.users_DAO import Users_DAO
-from persistency.rooms_DAO import Rooms_DAO
+from data.dashboard_persistency.users_DAO import Users_DAO
+from data.dashboard_persistency.rooms_DAO import Rooms_DAO
 class Service(object):
     def __init__(self, path):
         # ConfigParser.config_section_map = config_section_map
