@@ -21,15 +21,15 @@ body {
     margin: 8px;
 }
 #content {
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px;
 }
 .panel-button-container {
     margin-top: 4px;
+    margin-right: 5px;
     margin-bottom: 0;
     height: 150px;
     display: inline-block;
-    width: 49.30%;
+    width: calc(50% - 5px);
     text-align: center;
     vertical-align: top;
 
@@ -43,6 +43,9 @@ body {
 .panel-button {
     height: 100% !important;
     margin: 0;
+}
+.panel-button .fa-info-circle, .panel-button .fa-home {
+    margin-top: 30px;
 }
 .panel-button i {
     font-size: 50px;
@@ -144,5 +147,45 @@ li .ui-flipswitch {
     position: absolute;
     top: 0;
     right: 8px;
-    width: 94px !important;
+    box-sizing: content-box;
+}
+#sensor-popup {
+    display: none;
+    width: 300px;
+}
+
+.header-dropdown {
+    position: absolute;
+    right: 15px;
+    top: 7px;
+    cursor: pointer;
+    width: 7px;
+}
+
+.header-dropdown > ul {
+    margin: 0;
+    padding: 0;
+}
+
+.header-dropdown > ul > li {
+    background: none repeat scroll 0 0 #fff;
+    height: 7px;
+    width: 7px;
+    line-height: 0;
+    list-style: none outside none;
+    margin-right: 15px;
+    margin-top: 3px;
+    vertical-align: top;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.header-dropdown-menu {
+    display: none;
+    right: 0;
+    position: absolute;
+    width: 120px;
+}
+.header-dropdown-menu ul {
+    border-radius: 0;
 }
