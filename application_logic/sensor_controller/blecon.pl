@@ -35,8 +35,11 @@ sub slurp{
   <$fh>
 }
 
-my $ding = slurp "test.txt";
-#say @ding;
+my $ding = (join '', slurp "test.txt");
+my @ding2 = slurp "test.txt";
+say $ding;
+
+
 # Note: This is completely silent on error, so run the command
 # manually if you need to debug your connection.
 
@@ -83,13 +86,8 @@ for (@hex_ding){
 #     }
 # }
 sleep(2);
-say "hello";
 say $gatt_in "quit";
-say "hello1";
-close $gatt_in;
-say "hello2";
 close $gatt_out;
-say "hello3";
 close $gatt_in;
 kill "KILL" => $gatt_pid;
 waitpid $gatt_pid, 0;
