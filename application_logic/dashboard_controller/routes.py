@@ -1,9 +1,11 @@
 import json
 
 from flask import render_template, abort, Response, request
-from jinja2 import TemplateNotFound
+from data.dashboard_persistency.facade.service import Service as Persistency_service
 
 from application_logic.dashboard_controller import app
+
+persistency_service = Persistency_service('./database.db')
 
 @app.route('/')
 def index():
@@ -22,30 +24,28 @@ def temperature(city):
     return Response(json.dumps(data), mimetype='application/json')
 
 
-@app.route('/api/sensors/active')
-def active_sensors():
-    # TODO retrieve all active sensors
+@app.route('/api/devices/active')
+def active_devices():
+    # TODO retrieve all active devices
     data = 3
     return Response(json.dumps(data), mimetype='application/json')
 
 
 @app.route('/api/damages')
 def water_damages():
-    # TODO retrieve all active sensors
+    # TODO retrieve all active devices
     damages = [0, 1, 2, 6, 8]
     return Response(json.dumps(damages), mimetype='application/json')
 
 
-@app.route('/api/rooms/<int:room_id>/<string:sensor_id>', methods=['PUT'])
-def update_sensor_name(room_id, sensor_id):
+@app.route('/api/rooms/<int:room_id>/devices/<int:device_id>', methods=['PUT'])
+def update_sensor_name(room_id, device_id):
     form = request.form
+    print(form['active'] == 'true')
     if 'name' in form:
         print('name found=' + form['name'])
     elif 'active' in form:
-        print('active found=' + form['active'])
-
-    print(str(room_id) + ' -> ' + sensor_id)
-    # room = [room for room in rooms if room['id'] == room_id]
+        persistency_service.update_device_status(device_id, 1 if form['active'] == 'true' else 0)
     error = None
     response = {
         'error': error
@@ -53,49 +53,26 @@ def update_sensor_name(room_id, sensor_id):
     return Response(json.dumps(response), mimetype='application/json')
 
 
-@app.route('/api/sensors/get')
-def get_unnamed_sensors():
-    # get all unnamed sensors from the database so user can fill name for them
+@app.route('/api/devices/get')
+def get_unnamed_devices():
+    # get all unnamed devices from the database so user can fill name for them
 
     # dummy data
-    sensors = [
+    devices = [
         {
             'id': 1
         }
     ]
-    return Response(json.dumps(sensors), mimetype='application/json')
+    return Response(json.dumps(devices), mimetype='application/json')
 
 
 @app.route('/api/rooms')
 def get_rooms():
-    rooms = [
-        {
-            'id': 3,
-            'name': 'Hallo jumbo'
-        },
-        {
-            'id': 5,
-            'name': 'Hoogvliet altijd nummer 1'
-        }
-    ]
-    return Response(json.dumps(rooms), mimetype='application/json')
+    data = persistency_service.get_rooms_as_json()
+    return Response(data, mimetype='application/json')
 
 
-@app.route('/api/rooms/<string:room_id>/sensors')
-def get_room_sensors(room_id):
-    # TODO Get sensors for argued room id
-
-    # dummy data
-    sensors = [
-        {
-            'id': 'Hallo',
-            'name': 'Idk sensor',
-            'status': 0
-        },
-        {
-            'id': 'FF29DF',
-            'name': 'Tweede sensor',
-            'status': 1
-        }
-    ]
-    return Response(json.dumps(sensors), mimetype='application/json')
+@app.route('/api/rooms/<string:room>/devices')
+def get_room_devices(room):
+    data = persistency_service.get_devices_from_room(room)
+    return Response(data, mimetype='application/json')

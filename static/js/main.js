@@ -87,7 +87,7 @@ function bindEvents() {
     });
     popup.find('button').click(function(e) {
         $.ajax({
-            url: '/api/rooms/' + user_data.room + '/' + user_data.sensor,
+            url: '/api/rooms/' + user_data.room + '/devices/' + user_data.sensor,
             type: 'PUT',
             data: {
                 name: $('#sensor-name').val()
@@ -109,7 +109,7 @@ function bindEvents() {
             case 'home':
                 var city = 'Amersfoort';
                 //TODO Refresh dahsboard via ajax
-                $.get('/api/sensors/active', function(result) {
+                $.get('/api/devices/active', function(result) {
                     $('#sensor-count').text(result + ' Sensoren actief');
                 });
                 $.get('/api/temperature/' + city, function(result) {
@@ -133,20 +133,20 @@ function bindEvents() {
                 });
                 break;
             case 'settings-room':
-                $.get('/api/rooms/' + user_data.room + '/sensors', function(json) {
+                $.get('/api/rooms/' + user_data.room + '/devices', function(json) {
                     var list = $('#sensors');
                     list.empty();
                     for(var i in json) {
                         var sensor = json[i];
                         var status = sensor.status === 1 ? 'active' : 'inactive';
-                        var item = $('<li value="' + i + '"><a data-transition="slide"><i class="fa fa-plug sensor-' + status + '"></i>' + sensor.name + '</a><input type="checkbox" data-role="flipswitch"></li>');
+                        var item = $('<li value="' + i + '"><a data-transition="slide"><i class="fa fa-plug sensor-' + status + '"></i>' + sensor.name + '</a><input type="checkbox" data-role="flipswitch"' + (sensor.status === 1 ? ' checked=""' : '') + '></li>');
                         list.append(item);
                         item.find('input').flipswitch();
                         item.find('input').change(function() {
                             var value = $(this).is(':checked');
                             user_data.sensor = parseInt($(this).parent().parent().attr('value'));
                             $.ajax({
-                                url: '/api/rooms/' + user_data.room + '/' + user_data.sensor,
+                                url: '/api/rooms/' + user_data.room + '/devices/' + user_data.sensor,
                                 type: 'PUT',
                                 data: {
                                     active: value

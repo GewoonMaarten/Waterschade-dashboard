@@ -3,6 +3,7 @@ from sqlite3 import Error
 import itertools
 import os
 
+
 class Devices_DAO(object):
     'Database access object for the rooms table.'
 
@@ -29,6 +30,20 @@ class Devices_DAO(object):
         except Exception as e:
             # TODO implement logging - app.logger.Error(e)
             pass
-            
+
+    def get_devices_from_room(self, room):
+        self.cur.execute('SELECT * FROM devices WHERE rooms_id = ?', room)
+        rows = self.cur.fetchall()
+
+        devices_list = []
+
+        for row in rows:
+            devices_list.append(dict(itertools.izip(row.keys(), row)))
+        return devices_list
+
+    def update_device_status(self, device_id, status):
+        print('Device=' + str(device_id) + ', status=' + str(status))
+        self.cur.execute('UPDATE devices SET status = ? WHERE id = ?', (status, device_id))
+
     def __del__(self):
         self.conn.close()
