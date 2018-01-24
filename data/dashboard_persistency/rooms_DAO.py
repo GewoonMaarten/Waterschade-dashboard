@@ -14,7 +14,7 @@ class Rooms_DAO(object):
                 self.cur = self.conn.cursor()
         except Error as e:
            # TODO implement logging - app.logger.Error(e)
-           pass
+            pass
 
 
     def get_rooms(self):
@@ -25,7 +25,7 @@ class Rooms_DAO(object):
             rooms_list = []
 
             for row in rows:
-                rooms_list.append(dict(itertools.izip(row.keys(), row)))
+                rooms_list.append(dict(zip(row.keys(), row)))
             return rooms_list
         except Exception as e:
             # TODO implement logging - app.logger.Error(e)
