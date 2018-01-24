@@ -16,9 +16,9 @@ class DevicesDAO(object):
             # TODO implement logging - app.logger.Error(e)
             pass
 
-    def get_devices_by_room_id(self, room_id):
+    def get_devices_from_room(self, room):
         try:
-            self.cur.execute('SELECT * FROM devices WHERE rooms_id = ?', room_id)
+            self.cur.execute('SELECT * FROM devices WHERE rooms_id = ?', (room,))
             rows = self.cur.fetchall()
 
             devices_list = []
@@ -29,16 +29,6 @@ class DevicesDAO(object):
         except Exception as e:
             # TODO implement logging - app.logger.Error(e)
             pass
-
-    def get_devices_from_room(self, room):
-        self.cur.execute('SELECT * FROM devices WHERE rooms_id = ?', (room,))
-        rows = self.cur.fetchall()
-
-        devices_list = []
-
-        for row in rows:
-            devices_list.append(dict(zip(row.keys(), row)))
-        return devices_list
 
     def update_device_status(self, device_id, status):
         print('Device=' + str(device_id) + ', status=' + str(status))
