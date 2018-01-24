@@ -1,10 +1,10 @@
 import sqlite3
 from sqlite3 import Error
-import itertools
 import os
 
-class Rooms_DAO(object):
-    'Database access object for the rooms table.'
+
+class RoomsDAO(object):
+    """Database access object for the rooms table."""
 
     def __init__(self, path):
         try:
@@ -13,9 +13,8 @@ class Rooms_DAO(object):
                 self.conn.row_factory = sqlite3.Row
                 self.cur = self.conn.cursor()
         except Error as e:
-           # TODO implement logging - app.logger.Error(e)
+            # TODO implement logging - app.logger.Error(e)
             pass
-
 
     def get_rooms(self):
         try:

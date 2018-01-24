@@ -1,8 +1,10 @@
 import sqlite3
+from sqlite3 import Error
 import os
 
-class Users_DAO(object):
-    'Database access object for the user table.'
+
+class UsersDAO(object):
+    """Database access object for the user table."""
 
     def __init__(self, path):
 
@@ -11,7 +13,7 @@ class Users_DAO(object):
                 self.conn = sqlite3.connect(path, check_same_thread=False)
                 self.cur = self.conn.cursor()
         except Error as e:
-           print(e)
+            print(e)
 
     def create_user(self, email, password):
 

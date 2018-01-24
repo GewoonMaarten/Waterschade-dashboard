@@ -1,7 +1,7 @@
 import json
 
-from data.dashboard_persistency.users_DAO import Users_DAO
-from data.dashboard_persistency.rooms_DAO import Rooms_DAO
+from data.dashboard_persistency.users_DAO import UsersDAO
+from data.dashboard_persistency.rooms_DAO import RoomsDAO
 from data.dashboard_persistency.devices_DAO import DevicesDAO
 
 
@@ -13,8 +13,8 @@ class Service(object):
         # Config.read(config_path)
 
         # self.db_path = Config.config_section_map('database')['path']
-        self.user_DAO = Users_DAO(path)
-        self.rooms_DAO = Rooms_DAO(path)
+        self.user_DAO = UsersDAO(path)
+        self.rooms_DAO = RoomsDAO(path)
         self.devices_DAO = DevicesDAO(path)
 
     def save_user(self, email, password):
