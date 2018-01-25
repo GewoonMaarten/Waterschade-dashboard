@@ -20,6 +20,9 @@ class Service(object):
     def save_user(self, email, password):
         self.user_DAO.create_user(email, password)
 
+    def get_user_by_email(self, email):
+        return self.user_DAO.get_user_by_email(email=email)
+
     def get_rooms_as_json(self):
         return json.dumps(self.rooms_DAO.get_rooms())
 

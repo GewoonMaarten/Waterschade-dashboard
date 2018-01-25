@@ -1,13 +1,50 @@
 import json
+import flask
+import flask_login
 
-from flask import render_template, abort, Response, request
+from flask import render_template, Response, request
+
+from application_logic.dashboard_controller.authentication.User import User
 from data.dashboard_persistency.facade.service import Service as Persistency_service
 
 from application_logic.dashboard_controller import app
 
 persistency_service = Persistency_service('./database.db')
 
+users = {'foo@bar.tld': {'password': 'secret'}}
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if flask.request.method == 'GET':
+        return '''
+               <form action='login' method='POST'>
+                <input type='text' name='email' id='email' placeholder='email'/>
+                <input type='password' name='password' id='password' placeholder='password'/>
+                <input type='submit' name='submit'/>
+               </form>
+               '''
+
+    email = flask.request.form['email']
+    user = persistency_service.get_user_by_email(email)
+
+    if flask.request.form['password'] == user['password']:
+        user = User()
+        user.id = email
+        flask_login.login_user(user)
+        return flask.redirect(flask.url_for('index'))
+
+    return 'Bad login'
+
+
+@app.route('/logout')
+def logout():
+    flask_login.logout_user()
+    return flask.redirect(flask.url_for('login'))
+
+
 @app.route('/')
+@flask_login.login_required
 def index():
     return render_template('index.html')
 
