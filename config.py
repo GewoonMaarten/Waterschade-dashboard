@@ -1,5 +1,7 @@
 class Config(object):
     DEBUG = True
+    SECRET_KEY = 'super_secret_key'
 
-class Config_Prod(Config):
+
+class ConfigProd(Config):
     DEBUG = False

@@ -1,24 +1,12 @@
-#include <SPI.h>
 #include <ESP8266WiFi.h>
-char *ssid = "cracklan";
+String ssid = "cracklan";
 char *pass = "bruhplsno";
 
 int status = WL_IDLE_STATUS;
 char *pihostname = "raspberrypi";
-IPAddress server(192,168,43,185);
+//IPAddress server(192,168,43,185);
 
 WiFiClient client;
-
-class StateClass{
-  public:
-  bool IS_IDLE = true;
-  bool IS_CONNECTED = false;
-  bool REGISTERING = false;
-  bool SENDING_DATA = false;
-
-  StateClass(){}
-  
-};
 
 void setup() {
 //  StateClass State;
@@ -27,7 +15,7 @@ void setup() {
 //  Serial.println("\ngonnagotosleep");
 //  ESP.deepSleep(10e6);
   Serial.begin(115200);
-  WiFi.begin(ssid, pass);
+  WiFi.begin(ssid.c_str(), pass);
   Serial.print("\nConnecting to "); 
   Serial.println(ssid);
   uint8_t i = 0;
