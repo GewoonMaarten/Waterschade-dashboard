@@ -15,22 +15,23 @@ persistency_service = Persistency_service('./database.db')
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if flask.request.method == 'GET':
-        return '''
-               <form action='login' method='POST'>
-                <input type='text' name='email' id='email' placeholder='email'/>
-                <input type='password' name='password' id='password' placeholder='password'/>
-                <input type='submit' name='submit'/>
-               </form>
-               '''
+        return render_template('login.html')
 
     email = flask.request.form['email']
     user = persistency_service.get_user_by_email(email)
+
+    if user is None:
+        return Response(json.dumps({
+            'error': 'RIP'
+        }), mimetype='application/json')
 
     if flask.request.form['password'] == user['password']:
         user = User()
         user.id = email
         flask_login.login_user(user)
-        return flask.redirect(flask.url_for('index'))
+        return Response(json.dumps({
+            'success': True
+        }))
 
     return 'Bad login'
 

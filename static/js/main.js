@@ -62,6 +62,27 @@ function connectSmartCities() {
 }
 
 function bindEvents() {
+    $('#login-form').submit(function(e) {
+        e.preventDefault();
+        var helper = $('#login-form').find('small');
+        helper.text('');
+        var button = $('#login-form').find('button');
+        button.find('i').show();
+        button.find('span').text('');
+        var data = {
+            email: $('input[name=email]').val(),
+            password: $('input[name=password]').val()
+        };
+        $.post('/login', data, function(json) {
+            if (json.error) {
+                helper.text(json.error);
+                button.find('i').hide();
+                button.find('span').text('Login');
+                return;
+            }
+            document.location.href = '/';
+        });
+    });
     $('.header-dropdown ul').click(function() {
         var menu = $(this).next();
         var hidden = menu.css('display') === 'none';

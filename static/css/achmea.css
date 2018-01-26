@@ -186,6 +186,23 @@ li .ui-flipswitch {
     position: absolute;
     width: 120px;
 }
+
 .header-dropdown-menu ul {
     border-radius: 0;
+}
+
+#login-container {
+  min-height: calc(100% - 92px);  /* Fallback for browsers do NOT support vh unit */
+  min-height: calc(100vh - 92px); /* These two lines are counted as one :-)       */
+
+  display: flex;
+  align-items: center;
+}
+
+#login-container form {
+    text-align: left;
+}
+
+#login-container i {
+    display: none;
 }
