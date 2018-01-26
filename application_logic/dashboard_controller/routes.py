@@ -9,8 +9,7 @@ from data.dashboard_persistency.facade.service import Service as Persistency_ser
 
 from application_logic.dashboard_controller import app
 
-persistency_service = Persistency_service('./database.db')
-
+PERSISTENCY_SERVICE = Persistency_service('./database.db')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -24,7 +23,7 @@ def login():
                '''
 
     email = flask.request.form['email']
-    user = persistency_service.get_user_by_email(email)
+    user = PERSISTENCY_SERVICE.get_user_by_email(email)
 
     if flask.request.form['password'] == user['password']:
         user = User()
@@ -80,7 +79,7 @@ def update_sensor_name(room_id, device_id):
     if 'name' in form:
         print('name found=' + form['name'])
     elif 'active' in form:
-        persistency_service.update_device_status(device_id, 1 if form['active'] == 'true' else 0)
+        PERSISTENCY_SERVICE.update_device_status(device_id, 1 if form['active'] == 'true' else 0)
     error = None
     response = {
         'error': error
@@ -103,11 +102,11 @@ def get_unnamed_devices():
 
 @app.route('/api/rooms')
 def get_rooms():
-    data = persistency_service.get_rooms_as_json()
+    data = PERSISTENCY_SERVICE.get_rooms_as_json()
     return Response(data, mimetype='application/json')
 
 
 @app.route('/api/rooms/<string:room>/devices')
 def get_room_devices(room):
-    data = persistency_service.get_devices_from_room(room)
+    data = PERSISTENCY_SERVICE.get_devices_from_room(room)
     return Response(data, mimetype='application/json')

@@ -54,6 +54,7 @@ function connectSmartCities() {
             db.child("meldingen").child(user.uid).on('value', function (snapshot) {
                 snapshot.forEach(function(v) {
                     var object = v.val();
+                    console.log(object);
                     $.notify('<strong>' + v.key + '</strong><br/>Huidige regen status:' + object.regenStatus + '', { allow_dismiss: true });
                 });
             });
