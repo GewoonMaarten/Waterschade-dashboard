@@ -11,8 +11,6 @@ from application_logic.dashboard_controller import app
 
 persistency_service = Persistency_service('./database.db')
 
-users = {'foo@bar.tld': {'password': 'secret'}}
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
