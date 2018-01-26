@@ -12,13 +12,14 @@ if __name__ == '__main__':
     app.secret_key = Config.SECRET_KEY
 
     login_manager = flask_login.LoginManager()
+    login_manager.login_view = 'login'
     login_manager.init_app(app)
 
 
     @login_manager.user_loader
     def user_loader(email):
-        # if email not in users:
-        #    return
+        if persistency_service.get_user_by_email(email=email) is None:
+            return
 
         user = User()
         user.id = email
@@ -28,8 +29,8 @@ if __name__ == '__main__':
     @login_manager.request_loader
     def request_loader(request):
         email = request.form.get('email')
-        # if email not in users:
-        #    return
+        if persistency_service.get_user_by_email(email=email) is None:
+            return
 
         user = User()
         user.id = email
