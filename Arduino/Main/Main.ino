@@ -174,9 +174,9 @@ if (state == States::reading_eeprom){
   //Serial.flush();
  // String Tdata = "Pizza\r\npizza321\r\nSensor1\r\n";
   String Tdata = Read_EEPROM();
-  uint16_t point1 = Tdata.indexOf('\r\n');
-  uint16_t point2 = Tdata.indexOf('\r\n', point1 + 1);
-  uint16_t point3 = Tdata.indexOf('\r\n', point2 + 1);
+  uint16_t point1 = Tdata.indexOf('\n');
+  uint16_t point2 = Tdata.indexOf('\n', point1 + 1);
+  uint16_t point3 = Tdata.indexOf('\n', point2 + 1);
   
   
   ssid = Tdata.substring(0, point1);
