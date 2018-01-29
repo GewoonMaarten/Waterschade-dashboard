@@ -56,15 +56,18 @@ class DevicesDAO(object):
         return True
 
     def get_all_devices_without_room(self):
-        self.cur.execute('SELECT * FROM devices WHERE rooms_id IS NULL')
+        try:
+            self.cur.execute('SELECT * FROM devices WHERE rooms_id IS NULL')
 
-        devices_list = []
+            devices_list = []
 
-        rows = self.cur.fetchall()
+            rows = self.cur.fetchall()
 
-        for row in rows:
-            devices_list.append(dict(zip(row.keys(), row)))
-        return devices_list
+            for row in rows:
+                devices_list.append(dict(zip(row.keys(), row)))
+            return devices_list
+        except Error as e:
+            pass
 
 
     def __del__(self):
