@@ -7,8 +7,7 @@ class Service(object):
         pass
 
     def add_new_device(self, id, name=None):
-        pass
-    
+        print(id, name)
+
     def report_water_damage(self, id):
         pass
-    

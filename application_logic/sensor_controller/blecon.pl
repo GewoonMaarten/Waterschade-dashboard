@@ -36,7 +36,6 @@ sub slurp{
 }
 
 my $ding = (join '', slurp "test.txt");
-my @ding2 = slurp "test.txt";
 say $ding;
 
 
