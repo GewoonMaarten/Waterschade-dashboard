@@ -5,7 +5,7 @@ import sqlite3
 class WifiService:
 
     def __init__(self):
-        path = '../../database.db'
+        path = 'database.db'
         try:
             if os.path.exists(path):
                 self.conn = sqlite3.connect(path, check_same_thread=False)
@@ -22,3 +22,9 @@ class WifiService:
 
     def __del__(self):
         self.conn.close()
+
+
+service = WifiService()
+json = service.get_wifi_connection()
+
+print(json)
