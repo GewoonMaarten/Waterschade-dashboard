@@ -35,6 +35,10 @@ def login():
     return 'Bad login'
 
 
+@app.route('/setup')
+def index():
+    return render_template('setup.html')
+
 @app.route('/logout')
 def logout():
     flask_login.logout_user()

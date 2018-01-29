@@ -77,7 +77,6 @@ function connectSmartCities() {
                                     icon = 'fa fa-exclamation-circle';
                                     break;
                             }
-
                             $.notify({
                                 title: v.key,
                                 message: message,
