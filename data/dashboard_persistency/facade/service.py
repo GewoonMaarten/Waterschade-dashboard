@@ -49,3 +49,5 @@ class Service(object):
 
     def get_all_devices_without_room(self):
         return self.devices_DAO.get_all_devices_without_room()
+    def add_wifi_connection(self, ssid, password):
+        return json.dumps(self.user_DAO.add_wifi_connection(ssid, password))

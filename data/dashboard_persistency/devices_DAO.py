@@ -70,5 +70,10 @@ class DevicesDAO(object):
             pass
 
 
+    def add_wifi_connection(self, ssid, password):
+        self.cur.execute('INSERT INTO wifi_connections (`ssid`, `password`) VALUES (' + ssid + ', ' + password + ')')
+        self.conn.commit()
+        return True
+
     def __del__(self):
         self.conn.close()

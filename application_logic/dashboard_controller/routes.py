@@ -39,6 +39,16 @@ def login():
 def setup():
     return render_template('setup.html')
 
+
+@app.route('/setup', methods=['POST'])
+def setup_create():
+    form = request.form
+    if 'ssid' not in form or 'password' not in form:
+        return
+    json = PERSISTENCY_SERVICE.add_wifi_connection(form['ssid'], form['password'])
+    return Response(json, mimetype='application/json')
+
+
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
