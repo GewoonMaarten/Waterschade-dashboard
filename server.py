@@ -3,6 +3,10 @@ import socket
 import fcntl
 import struct
 
+from application_logic.dashboard_controller.facade.service import Service as Dashboard_service
+
+dashboard_service = Dashboard_service()
+
 def get_ip_address(ifname):
 	sintern = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	return socket.inet_ntoa(fcntl.ioctl(
@@ -27,7 +31,8 @@ print(addr)
 while 1:
     data = conn.recv(BUFFER_SIZE)
     if not data: break
-    print("received data:")
-    print(data)
+
+	dashboard_service.add_new_device(1, 'test')
+
     conn.send(data)  # echo
 conn.close()
