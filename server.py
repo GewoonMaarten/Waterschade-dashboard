@@ -31,8 +31,5 @@ print(addr)
 while 1:
     data = conn.recv(BUFFER_SIZE)
     if not data: break
-
-	dashboard_service.add_new_device(1, 'test')
-
-    conn.send(data)  # echo
+    dashboard_service.add_new_device(data.decode("utf-8"), 'test')
 conn.close()
