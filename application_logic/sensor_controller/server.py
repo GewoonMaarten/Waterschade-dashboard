@@ -1,3 +1,7 @@
+
+import os
+import sys
+print(os.path.dirname(sys.modules["__main__"].__file__))
 import application_logic.dashboard_controller.facade.service.Service
 import socket
 import fcntl
