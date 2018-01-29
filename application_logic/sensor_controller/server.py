@@ -2,7 +2,7 @@
 import socket
 import fcntl
 import struct
-from dashboard_controller.facade.service import Service as mrHotchins
+from Waterschade-project.application_controller.dashboard_controller.facade.service import Service as mrHotchins
 
 def get_ip_address(ifname):
 	sintern = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
