@@ -251,3 +251,49 @@ function bindEvents() {
         }
     });
 }
+
+$(document).on('pageshow', '#new-devices-dialog', () => { 
+
+    $("#loading").show();
+
+    function call(limit, callback) {
+        let i = 0;
+        let call = setInterval(() => {
+
+            $('#device-list').empty();
+
+            $.get('/api/devices/new', (result) => {
+                if(result.length <= 0){
+                    return result;
+                }
+            }).then( devices => {
+                console.log(devices);
+                for(let device of devices){
+                    $("#device-list").append(`            
+                    <div class="device">
+                        <i class="fa fa-cube"></i>
+                        <b>Water Sensor</b>
+                        <p>id: ${device['id']}</p>
+                        <hr />
+                    </div>
+                `)
+                }
+                $("#loading").hide();
+                clearInterval(call);
+                callback('done');
+            });
+
+            console.log(i);
+            if (i === limit - 1) {
+                $("#loading").hide();
+                clearInterval(call);
+                callback('done');
+            }
+            i++;
+        }, 2000);
+    }
+    
+    call(5, (x) => {
+      console.log(x);
+    });
+});

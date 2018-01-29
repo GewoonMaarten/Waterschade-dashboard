@@ -209,3 +209,37 @@ li .ui-flipswitch {
 span[data-notify='title'] {
     font-weight: bold;
 }
+
+#loading {
+    display: none;
+    text-align: center;
+    font-size: 28px;
+}
+
+.device {
+    display: grid;
+    grid-template-rows: 30px 20px 17px;
+    grid-template-columns: 50px auto;
+}
+
+.device i {
+    font-size: 40px;
+    grid-column: 1;
+    grid-row: 1 2;
+}
+
+.device b {
+    font-size: 23px;
+}
+
+.device p {
+    grid-column: 2;
+    grid-row: 2;
+    color: #808080;
+}
+
+.device hr {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+    width: 100%;
+}
