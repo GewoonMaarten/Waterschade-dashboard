@@ -36,7 +36,7 @@ def login():
 
 
 @app.route('/setup')
-def index():
+def setup():
     return render_template('setup.html')
 
 @app.route('/logout')
