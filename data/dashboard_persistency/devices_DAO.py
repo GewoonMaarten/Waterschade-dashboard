@@ -30,10 +30,21 @@ class DevicesDAO(object):
             # TODO implement logging - app.logger.Error(e)
             pass
 
+    def get_device_name(self, device_id):
+        self.cur.execute('SELECT name FROM devices WHERE id = ?', (device_id,))
+        row = self.cur.fetchone()
+        test = dict(zip(row.keys(), row))
+        return test
+
+    def update_device_name(self, device_id, name):
+        self.cur.execute('UPDATE devices SET name = ? WHERE id = ?', (name, device_id))
+        self.conn.commit()
+        return True
+
     def update_device_status(self, device_id, status):
-        print('Device=' + str(device_id) + ', status=' + str(status))
         self.cur.execute('UPDATE devices SET status = ? WHERE id = ?', (status, device_id))
         self.conn.commit()
+        return True
 
     def __del__(self):
         self.conn.close()

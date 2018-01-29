@@ -76,16 +76,22 @@ def water_damages():
 @app.route('/api/rooms/<int:room_id>/devices/<int:device_id>', methods=['PUT'])
 def update_sensor_name(room_id, device_id):
     form = request.form
-    print(form['active'] == 'true')
+    response = {}
     if 'name' in form:
-        print('name found=' + form['name'])
+        PERSISTENCY_SERVICE.update_device_name(device_id, form['name'])
+        response['name'] = form['name']
     elif 'active' in form:
         PERSISTENCY_SERVICE.update_device_status(device_id, 1 if form['active'] == 'true' else 0)
-    error = None
-    response = {
-        'error': error
-    }
+        response['active'] = True if form['active'] == 'true' else False
+    response['error'] = None
+    print(response)
     return Response(json.dumps(response), mimetype='application/json')
+
+
+@app.route('/api/rooms/<int:room_id>/devices/<int:device_id>/name', methods=['GET'])
+def get_device_name(room_id, device_id):
+    name = PERSISTENCY_SERVICE.get_device_name(device_id)
+    return Response(json.dumps(name), mimetype='application/json')
 
 
 @app.route('/api/devices/get')

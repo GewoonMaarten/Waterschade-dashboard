@@ -32,5 +32,11 @@ class Service(object):
     def get_devices_from_room(self, room):
         return json.dumps(self.devices_DAO.get_devices_from_room(room))
 
+    def get_device_name(self, device_id):
+        return json.dumps(self.devices_DAO.get_device_name(device_id))
+
+    def update_device_name(self, device_id, name):
+        return json.dumps(self.devices_DAO.update_device_name(device_id, name))
+
     def update_device_status(self, device_id, status):
         return json.dumps(self.devices_DAO.update_device_status(device_id, status))

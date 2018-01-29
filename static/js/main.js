@@ -1,8 +1,7 @@
 
 var user_data = {
     room: -1,
-    sensor: -1,
-    sensors: []
+    sensor: -1
 };
 
 $(function() {
@@ -51,11 +50,44 @@ function connectSmartCities() {
     auth.onAuthStateChanged(function(user) {
         if (user) {
             var db = firebase.database().ref();
-            db.child("meldingen").child(user.uid).on('value', function (snapshot) {
+            db.child("notifications").child(user.uid).on('value', function (snapshot) {
                 snapshot.forEach(function(v) {
                     var object = v.val();
                     console.log(object);
-                    $.notify('<strong>' + v.key + '</strong><br/>Huidige regen status:' + object.regenStatus + '', { allow_dismiss: true });
+                    for(var i in object.triggers) {
+                        var trigger = object.triggers[i];
+                        if (trigger.activated) {
+                            var message;
+                            if (i === 'wind_speed') {
+                                message = 'Windkracht ' + object.windPower + ' in de ' + object.windDirection.toLowerCase() + ' richting.';
+                            }
+                            var type;
+                            var icon;
+                            switch(trigger.severity) {
+                                case 0:
+                                    type = 'info';
+                                    icon = 'fa fa-info-circle';
+                                    break;
+                                case 1:
+                                    type = 'warning';
+                                    icon = 'fa fa-exclamation-triangle';
+                                    break;
+                                case 2:
+                                    type = 'danger';
+                                    icon = 'fa fa-exclamation-circle';
+                                    break;
+                            }
+
+                            $.notify({
+                                title: v.key,
+                                message: message,
+                                icon: icon
+                            }, {
+                                type: type,
+                                allow_dismiss: true
+                            });
+                        }
+                    }
                 });
             });
         }
@@ -100,12 +132,13 @@ function bindEvents() {
         $('#room-title').text('Kamer ' + id);
     });
     $('#sensors').on('click', 'li > a', function() {
-        var sensor = user_data.sensors[parseInt($(this).parent().attr('value'))];
-        $('#sensor-name').val(sensor.name);
-        popup.show();
-        popup.popup();
-        popup.popup("open");
-        user_data.sensor = sensor.id;
+        user_data.sensor = parseInt($(this).parent().attr('value'));
+        $.get('/api/rooms/' + user_data.room + '/devices/' + user_data.sensor + '/name', function(json) {
+            $('#sensor-name').val(json.name);
+            popup.show();
+            popup.popup();
+            popup.popup("open");
+        });
     });
     popup.find('button').click(function(e) {
         $.ajax({
@@ -119,6 +152,11 @@ function bindEvents() {
                     $('#sensor-popup').find('.help-block').text(json.error);
                 } else {
                     popup.popup("close");
+                    $('#sensors').find('li').each(function(i) {
+                        if (parseInt($(this).attr('value')) === user_data.sensor) {
+                            $(this).find('a span').text(json.name);
+                        }
+                    });
                 }
             }
         });
@@ -161,12 +199,13 @@ function bindEvents() {
                     for(var i in json) {
                         var sensor = json[i];
                         var status = sensor.status === 1 ? 'active' : 'inactive';
-                        var item = $('<li value="' + i + '"><a data-transition="slide"><i class="fa fa-plug sensor-' + status + '"></i>' + sensor.name + '</a><input type="checkbox" data-role="flipswitch"' + (sensor.status === 1 ? ' checked=""' : '') + '></li>');
+                        var item = $('<li value="' + sensor.id + '"><a data-transition="slide"><i class="fa fa-plug sensor-' + status + '"></i><span>' + sensor.name + '</span></a><input type="checkbox" data-role="flipswitch"' + (sensor.status === 1 ? ' checked=""' : '') + '></li>');
                         list.append(item);
                         item.find('input').flipswitch();
                         item.find('input').change(function() {
-                            var value = $(this).is(':checked');
-                            user_data.sensor = parseInt($(this).parent().parent().attr('value'));
+                            var input = $(this);
+                            var value = input.is(':checked');
+                            user_data.sensor = parseInt(input.parent().parent().attr('value'));
                             $.ajax({
                                 url: '/api/rooms/' + user_data.room + '/devices/' + user_data.sensor,
                                 type: 'PUT',
@@ -176,12 +215,17 @@ function bindEvents() {
                                 success: function(response) {
                                     if (response.error) {
                                         $.notify('<strong>Er is een fout opgetreden!</strong><br/>' + response.error);
+                                    } else {
+                                        if (response.active) {
+                                            input.parent().prev().find('i').removeClass('sensor-inactive').addClass('sensor-active');
+                                        } else {
+                                            input.parent().prev().find('i').removeClass('sensor-active').addClass('sensor-inactive');
+                                        }
                                     }
                                 }
                             });
                         });
                     }
-                    user_data.sensors = json;
                     list.listview('refresh');
                 });
                 break;

@@ -206,3 +206,6 @@ li .ui-flipswitch {
 #login-container i {
     display: none;
 }
+span[data-notify='title'] {
+    font-weight: bold;
+}
