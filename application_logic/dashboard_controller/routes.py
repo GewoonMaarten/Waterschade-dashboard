@@ -46,7 +46,6 @@ def setup_create():
     if 'ssid' not in form or 'password' not in form:
         return
     json = PERSISTENCY_SERVICE.add_wifi_connection(form['ssid'], form['password'])
-    print(json)
     return Response(json, mimetype='application/json')
 
 
