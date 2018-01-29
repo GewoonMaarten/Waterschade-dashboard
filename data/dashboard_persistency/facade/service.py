@@ -40,3 +40,6 @@ class Service(object):
 
     def update_device_status(self, device_id, status):
         return json.dumps(self.devices_DAO.update_device_status(device_id, status))
+
+    def add_wifi_connection(self, ssid, password):
+        return json.dumps(self.user_DAO.add_wifi_connection(ssid, password))

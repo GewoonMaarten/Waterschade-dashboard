@@ -6,8 +6,28 @@ var user_data = {
 
 $(function() {
     loop();
-    connectSmartCities();
     bindEvents();
+    $('#wifi-form').submit(function(e) {
+        e.preventDefault();
+        var helper = $('#wifi-form').find('small');
+        helper.text('');
+        var button = $('#wifi-form').find('button');
+        button.find('i').show();
+        button.find('span').text('');
+        var data = {
+            ssid: $('input[name=ssid]').val(),
+            password: $('input[name=password]').val()
+        };
+        $.post('/setup', data, function(json) {
+            if (json.error) {
+                helper.text(json.error);
+                button.find('i').hide();
+                button.find('span').text('Instellen');
+                return;
+            }
+            document.location.href = '/';
+        });
+    });
 });
 
 var nextColon = true;
