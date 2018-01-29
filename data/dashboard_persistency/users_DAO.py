@@ -37,17 +37,23 @@ class UsersDAO(object):
         self.cur.execute('DELETE FROM users WHERE email=?', (email,))
         self.conn.commit()
 
-    def get_wifi_connection_id(self, ssid):
-        self.cur.execute('SELECT id FROM wifi_connections WHERE ssid = ?', (ssid,))
+    def get_wifi_connections(self):
+        self.cur.execute('SELECT * FROM wifi_connections')
         row = self.cur.fetchone()
+        if row is None:
+            return None
         return dict(zip(row.keys(), row))
 
     def add_wifi_connection(self, ssid, password):
-        self.cur.execute(
-            'INSERT INTO wifi_connections (ssid, password) VALUES (?, ?)', (ssid, password)
-        )
+        l = self.get_wifi_connections()
+        if l is None:
+            self.cur.execute(
+                'INSERT INTO wifi_connections (id, ssid, password) VALUES (?, ?, ?)', (1, ssid, password)
+            )
+        else:
+            self.cur.execute('UPDATE wifi_connections SET ssid = ?, password = ? WHERE id = 1', (ssid, password))
         self.conn.commit()
-        return self.get_wifi_connection_id(ssid)
+        return True
 
     def __del__(self):
         self.conn.close()
