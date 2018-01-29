@@ -111,6 +111,12 @@ def get_unnamed_devices():
     return Response(json.dumps(devices), mimetype='application/json')
 
 
+@app.route('/api/devices/new')
+def get_new_devices():
+    devices = PERSISTENCY_SERVICE.get_all_devices_without_room()
+    return Response(json.dumps(devices), mimetype='application/json')
+
+
 @app.route('/api/rooms')
 def get_rooms():
     data = PERSISTENCY_SERVICE.get_rooms_as_json()
