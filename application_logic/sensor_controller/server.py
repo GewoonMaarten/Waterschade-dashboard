@@ -2,6 +2,7 @@
 import socket
 import fcntl
 import struct
+from Waterschade-project.application_controller.dashboard_controller.facade.service import Service as mrHotchins
 
 def get_ip_address(ifname):
 	sintern = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -27,7 +28,5 @@ print(addr)
 while 1:
     data = conn.recv(BUFFER_SIZE)
     if not data: break
-    print("received data:")
-    print(data)
-    conn.send(data)  # echo
-conn.close()
+    mrHotchins.add_new_device(data.decode("utf-8"), "testnaam")
+    conn.close()
