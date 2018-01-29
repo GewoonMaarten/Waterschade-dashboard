@@ -1,11 +1,7 @@
-
+import application_logic.dashboard_controller.facade.service.Service
 import socket
 import fcntl
 import struct
-
-from application_logic.dashboard_controller.facade.service import Service as Dashboard_service
-
-dashboard_service = Dashboard_service()
 
 def get_ip_address(ifname):
 	sintern = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -31,5 +27,9 @@ print(addr)
 while 1:
     data = conn.recv(BUFFER_SIZE)
     if not data: break
-    dashboard_service.add_new_device(data.decode("utf-8"), 'test')
-conn.close()
+	sensorname, bool(trigger) = data.decode("utf-8").split(" ")
+    if mrHotchins.check_if_sensor_present(sensorname):
+		mrHotchins.add_new_device(sensorname)
+	if trigger:
+		mrHotchins.report_water_damage(sensorname)
+    conn.close()

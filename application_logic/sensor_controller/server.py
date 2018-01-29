@@ -1,8 +1,11 @@
 
+import os
+import sys
+print(os.path.dirname(sys.modules["__main__"].__file__))
+import application_logic.dashboard_controller.facade.service.Service
 import socket
 import fcntl
 import struct
-from Waterschade-project.application_controller.dashboard_controller.facade.service import Service as mrHotchins
 
 def get_ip_address(ifname):
 	sintern = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -28,5 +31,9 @@ print(addr)
 while 1:
     data = conn.recv(BUFFER_SIZE)
     if not data: break
-    mrHotchins.add_new_device(data.decode("utf-8"), "testnaam")
+	sensorname, bool(trigger) = data.decode("utf-8").split(" ")
+    if mrHotchins.check_if_sensor_present(sensorname):
+		mrHotchins.add_new_device(sensorname)
+	if trigger:
+		mrHotchins.report_water_damage(sensorname)
     conn.close()
