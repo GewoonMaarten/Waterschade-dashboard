@@ -40,3 +40,9 @@ class Service(object):
 
     def update_device_status(self, device_id, status):
         return json.dumps(self.devices_DAO.update_device_status(device_id, status))
+
+    def get_device(self, device_id):
+        return self.devices_DAO.get_device(device_id)
+
+    def add_device(self, device_id):
+        return self.add_device(device_id)

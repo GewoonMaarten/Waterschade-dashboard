@@ -46,5 +46,14 @@ class DevicesDAO(object):
         self.conn.commit()
         return True
 
+    def get_device(self, device_id):
+        self.cur.execute('SELECT * FROM devices WHERE id = ?', (device_id,))
+        return self.cur.fetchone()
+
+    def add_device(self, device_id):
+        self.cur.execute('INSERT INTO devices(id, status) VALUES (?,1)', (device_id,))
+        self.conn.commit()
+        return True
+
     def __del__(self):
         self.conn.close()
