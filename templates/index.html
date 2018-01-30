@@ -18,9 +18,6 @@
     <script type="text/javascript" src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <!--<script type="text/javascript" src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>-->
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
     <script type="text/javascript" src="/static/js/notify.min.js"></script>
     <script type="text/javascript" src="/static/js/main.js"></script>
     <!--<script type="text/javascript" src="/static/js/jquery.ui.touch-punch.min.js"></script>-->
@@ -280,19 +277,20 @@
     <div data-role="page" id="new-devices-dialog">
         <div data-role="header">
             <h2>New Devices</h2>
+            <button id='devices-refresh' class="ui-btn-right ui-btn ui-shadow ui-corner-all">
+                <i class='fa fa-refresh'></i>
+            </button>
         </div>
         <div role="main" class="ui-content">
             <p>Zet de hub pairing modes.</p>
+            <hr />
             <div id="loading">
                 <i class="fa fa-spin fa-refresh"></i>
             </div>
-        
-            <hr />
-
             <div id="device-list"></div>
+            <hr />
         </div>
     </div>
-
 </div>
 </body>
 </html>

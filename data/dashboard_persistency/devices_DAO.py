@@ -46,6 +46,11 @@ class DevicesDAO(object):
         self.conn.commit()
         return True
 
+    def update_device_room(self, device_id, rooms_id):
+        self.cur.execute('UPDATE devices SET rooms_id = ?, status=1 WHERE id = ?', (rooms_id, device_id))
+        self.conn.commit()
+        return True    
+
     def get_device(self, device_id):
         self.cur.execute('SELECT * FROM devices WHERE id = ?', (device_id,))
         return self.cur.fetchone()
