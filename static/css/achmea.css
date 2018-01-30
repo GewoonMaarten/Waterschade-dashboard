@@ -218,7 +218,7 @@ span[data-notify='title'] {
 
 .device {
     display: grid;
-    grid-template-rows: 30px 20px 17px;
+    grid-template-rows: 30px 20px auto 17px;
     grid-template-columns: 50px auto;
 }
 
@@ -238,8 +238,24 @@ span[data-notify='title'] {
     color: #808080;
 }
 
-.device hr {
-    grid-column: 1 / span 2;
+.device .room-select {
+    grid-column: 1 / span 3;
     grid-row: 3;
     width: 100%;
+}
+
+.device  form {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    grid-column: 1 /span 2;
+    grid-row: 3;
+}
+
+.device .room-selector {
+    margin: 8px 20px;
+}
+
+.device .room-save {
+    margin: 8px 20px;
 }

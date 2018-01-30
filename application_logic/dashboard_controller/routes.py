@@ -97,6 +97,9 @@ def update_sensor_name(room_id, device_id):
     elif 'active' in form:
         PERSISTENCY_SERVICE.update_device_status(device_id, 1 if form['active'] == 'true' else 0)
         response['active'] = True if form['active'] == 'true' else False
+    elif 'rooms_id' in form:
+        PERSISTENCY_SERVICE.update_device_room(device_id, form['rooms_id'])
+        response['rooms_id'] = form['rooms_id']
     response['error'] = None
     print(response)
     return Response(json.dumps(response), mimetype='application/json')

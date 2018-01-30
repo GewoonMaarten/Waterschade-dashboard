@@ -293,47 +293,90 @@ function bindEvents() {
 }
 
 $(document).on('pageshow', '#new-devices-dialog', () => { 
-
-    $("#loading").show();
-
+    // Execute every 4 secondes for a total of 5 times.
     function call(limit, callback) {
         let i = 0;
         let call = setInterval(() => {
 
-            $('#device-list').empty();
+            var roomsPromise = $.get('/api/rooms');
+            var devicesPromise = $.get('/api/devices/new');
+            
+            $.when(roomsPromise, devicesPromise)
+            .done((rooms, devices) => {
 
-            $.get('/api/devices/new', (result) => {
-                if(result.length <= 0){
-                    return result;
+                let roomsSelect = '';
+                for(let room of rooms[0]) {
+                    roomsSelect += `<option value=${room.id}>${room.name}</option>\n`;
                 }
-            }).then( devices => {
-                console.log(devices);
-                for(let device of devices){
-                    $("#device-list").append(`            
-                    <div class="device">
-                        <i class="fa fa-cube"></i>
-                        <b>Water Sensor</b>
-                        <p>id: ${device['id']}</p>
-                        <hr />
-                    </div>
-                `)
+
+                for(let device of devices[0]){
+                    $("#device-list").append(
+                        `<div class="device">
+                            <i class="fa fa-cube"></i>
+                            <b>Water Sensor</b>
+                            <p>id: ${device['id']}</p>
+                            <form id="form-device-${device['id']}">
+                                <select class="room-selector ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow">
+                                    <option value="" selected disabled>Selecteer een kamer.</option>
+                                    ${roomsSelect}
+                                </select>
+                                <input type="submit" class="room-save  ui-btn ui-shadow ui-corner-all" value="save"/>
+                            </form>
+                            <hr />
+                        </div>`
+                    )
+
+                    $(`#form-device-${device['id']}`).submit(e => {
+                        e.preventDefault();
+
+                        const value = $(`#form-device-${device['id']}`).children('select').val();
+
+                        if(value != null){
+                            $.ajax({
+                                url: `/api/rooms/${value}/devices/${device['id']}`,
+                                type: 'PUT',
+                                data: {
+                                    rooms_id: value
+                                }
+                            }).done( () => {
+                                refresh();
+                            });
+                        }
+                    });
                 }
+
                 $("#loading").hide();
                 clearInterval(call);
-                callback('done');
+                callback('Done');
             });
-
-            console.log(i);
             if (i === limit - 1) {
                 $("#loading").hide();
                 clearInterval(call);
-                callback('done');
+                callback('Failed');
             }
+
             i++;
-        }, 2000);
+        }, 4000);
+    }
+
+    function refresh(){
+        $('#device-list').empty();
+        $("#loading").show();
+        call(5, (status) => {
+            console.log(status);
+
+            if (!$.trim($('#device-list').html())){
+                $('#device-list').append(
+                    '<p style="text-align: center;">Geen sensoren gevonden.</p>'
+                );
+            }
+        });
     }
     
-    call(5, (x) => {
-      console.log(x);
+    $('#devices-refresh').click(e => {
+        e.preventDefault();
+        refresh();
     });
+
+    refresh();
 });
