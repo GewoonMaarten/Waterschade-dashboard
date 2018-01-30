@@ -35,7 +35,16 @@ sub slurp{
   <$fh>
 }
 
-my $ding = (join '', slurp "test.txt");
+system("cd ../../\npython3 WifiService.py");
+
+my @rawding = slurp "test.txt";
+
+my $text0 = substr $rawding[0], 0, -1;
+my $text1 = substr $rawding[1], 0, -1;
+my $cmd = "sudo sh -c 'wpa_passphrase $text0 $text1 > /etc/wpa_supplicant/wpa_supplicant.conf'";
+system($cmd)
+
+my $ding = (join '', @rawding);
 say $ding;
 
 
@@ -46,6 +55,7 @@ my $gatt_pid = open2(my $gatt_out,
                      my $gatt_in,
                      qw(gatttool -I),
                      -b => $addr);
+
 
 my $really_kill = 0;
 $SIG{INT} = sub {
