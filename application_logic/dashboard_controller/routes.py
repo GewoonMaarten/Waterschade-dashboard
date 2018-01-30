@@ -140,3 +140,28 @@ def get_rooms():
 def get_room_devices(room):
     data = PERSISTENCY_SERVICE.get_devices_from_room(room)
     return Response(data, mimetype='application/json')
+
+
+@app.route('/api/ice')
+def get_all_ice():
+    data = PERSISTENCY_SERVICE.get_ice_list()
+    return Response(data, mimetype='application/json')
+
+
+@app.route('/api/ice/<int:contact_id>')
+def get_ice(contact_id):
+    data = PERSISTENCY_SERVICE.get_ice(contact_id)
+    return Response(data, mimetype='application/json')
+
+
+@app.route('/api/ice/<int:contact_id>', methods=['POST'])
+def update_ice(contact_id):
+    form = request.form
+    name = form['name']
+    email = form['email']
+    phone_number = form['phone_number']
+    PERSISTENCY_SERVICE.update_ice(contact_id, name, email, phone_number)
+    data = {
+        'error': None
+    }
+    return Response(json.dumps(data), mimetype='application/json')

@@ -3,6 +3,7 @@ import json
 from data.dashboard_persistency.users_DAO import UsersDAO
 from data.dashboard_persistency.rooms_DAO import RoomsDAO
 from data.dashboard_persistency.devices_DAO import DevicesDAO
+from data.dashboard_persistency.ICE_Dao import ICEDao
 
 
 class Service(object):
@@ -16,6 +17,7 @@ class Service(object):
         self.user_DAO = UsersDAO(path)
         self.rooms_DAO = RoomsDAO(path)
         self.devices_DAO = DevicesDAO(path)
+        self.ice_DAO = ICEDao(path)
 
     def save_user(self, email, password):
         self.user_DAO.create_user(email, password)
@@ -52,5 +54,21 @@ class Service(object):
 
     def get_all_devices_without_room(self):
         return self.devices_DAO.get_all_devices_without_room()
+
     def add_wifi_connection(self, ssid, password):
         return json.dumps(self.user_DAO.add_wifi_connection(ssid, password))
+
+    def create_ice(self, name, email, phone_number):
+        return json.dumps(self.ice_DAO.create_contact(name, email, phone_number))
+
+    def get_ice(self, contact_id):
+        return json.dumps(self.ice_DAO.get(contact_id))
+
+    def get_ice_list(self):
+        return json.dumps(self.ice_DAO.get_all())
+
+    def delete_ice(self, contact_id):
+        return json.dumps(self.ice_DAO.delete_contact(contact_id))
+
+    def update_ice(self, contact_id, name, email, phone_number):
+        return json.dumps(self.ice_DAO.update(contact_id, name, email, phone_number))

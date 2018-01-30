@@ -27,9 +27,9 @@ print(addr)
 while 1:
     data = conn.recv(BUFFER_SIZE)
     if not data: break
-	sensorname, bool(trigger) = data.decode("utf-8").split(" ")
-    if mrHotchins.check_if_sensor_present(sensorname):
-		mrHotchins.add_new_device(sensorname)
+	sensorid, bool(trigger) = data.decode("utf-8").split(" ")
+    if mrHotchins.check_if_sensor_present(sensorid):
+		mrHotchins.add_new_device(sensorid)
 	if trigger:
-		mrHotchins.report_water_damage(sensorname)
+		mrHotchins.report_water_damage(sensorid)
     conn.close()
