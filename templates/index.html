@@ -27,7 +27,7 @@
 
     <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
     <script>
-        $(function() {
+        $(function () {
             connectSmartCities();
         });
     </script>
@@ -46,7 +46,8 @@
                 <div class="dropdown-content header-dropdown-menu">
                     <ul data-role="listview" data-inset="true">
                         <li data-icon="false"><a href="#"><i class="fa fa-sort"></i> Sort tiles</a></li>
-                        <li data-icon="false"><a href="/logout" rel="external"><i class="fa fa-sign-out"></i>Logout</a></li>
+                        <li data-icon="false"><a href="/logout" rel="external"><i class="fa fa-sign-out"></i>Logout</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -171,10 +172,18 @@
 
         <div role="main">
             <ul class="mobile-list" data-role="listview">
-                <li value="2"><a href="#ice-contact" data-transition="slide"><i class="fa fa-address-book"></i>Contact 1</a></li>
-                <li value="3"><a href="#ice-contact" data-transition="slide"><i class="fa fa-address-book"></i>Contact 2</a></li>
-                <li value="4"><a href="#ice-contact" data-transition="slide"><i class="fa fa-address-book"></i>Contact 3</a></li>
+                <li value="2"><a href="#ice-contact" data-transition="slide"><i class="fa fa-address-book"></i>Contact 1</a>
+                </li>
+                <li value="3"><a href="#ice-contact" data-transition="slide"><i class="fa fa-address-book"></i>Contact 2</a>
+                </li>
+                <li value="4"><a href="#ice-contact" data-transition="slide"><i class="fa fa-address-book"></i>Contact 3</a>
+                </li>
             </ul>
+        </div>
+
+        <div class="room-tools">
+            - <a href="#"><i class="fa fa-plus"></i></a>
+            -
         </div>
 
         <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -197,8 +206,24 @@
             <h1>Contact 1</h1>
         </div>
 
-        <div role="main">
-            formulier hier
+        <div role="main" class="row justify-content-center">
+            <div class="col-md-4 col-lg-3">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Naam</label>
+                        <input type="text" class="form-control" id="name" placeholder="Naam">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone_number">Telefoonnummer</label>
+                        <input type="tel" class="form-control" id="phone_number" placeholder="Telefoonnummer">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
         </div>
 
         <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -295,8 +320,8 @@
             <div id="loading">
                 <i class="fa fa-spin fa-refresh"></i>
             </div>
-        
-            <hr />
+
+            <hr/>
 
             <div id="device-list"></div>
         </div>
