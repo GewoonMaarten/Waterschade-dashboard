@@ -66,3 +66,6 @@ class Service(object):
 
     def delete_ice(self, contact_id):
         return json.dumps(self.ice_DAO.delete_contact(contact_id))
+
+    def update_ice(self, contact_id, name, email, phone_number):
+        return json.dumps(self.ice_DAO.update(contact_id, name, email, phone_number))

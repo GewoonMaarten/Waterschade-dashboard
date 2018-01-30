@@ -171,19 +171,11 @@
         </div>
 
         <div role="main">
-            <ul class="mobile-list" data-role="listview">
-                <li value="2"><a href="#ice-contact" data-transition="slide"><i class="fa fa-address-book"></i>Contact 1</a>
-                </li>
-                <li value="3"><a href="#ice-contact" data-transition="slide"><i class="fa fa-address-book"></i>Contact 2</a>
-                </li>
-                <li value="4"><a href="#ice-contact" data-transition="slide"><i class="fa fa-address-book"></i>Contact 3</a>
-                </li>
-            </ul>
+            <ul class="mobile-list" data-role="listview"></ul>
         </div>
 
         <div class="room-tools">
-            - <a href="#"><i class="fa fa-plus"></i></a>
-            -
+            <a href="#"><i class="fa fa-plus"></i></a>
         </div>
 
         <div class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
@@ -208,18 +200,18 @@
 
         <div role="main" class="row justify-content-center">
             <div class="col-md-4 col-lg-3">
-                <form>
+                <form id="ice-contact-form">
                     <div class="form-group">
                         <label for="name">Naam</label>
-                        <input type="text" class="form-control" id="name" placeholder="Naam">
+                        <input type="text" class="form-control" name="name" placeholder="Vul een naam in...">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Email">
+                        <input type="email" class="form-control" name="email" placeholder="Vul een email in...">
                     </div>
                     <div class="form-group">
                         <label for="phone_number">Telefoonnummer</label>
-                        <input type="tel" class="form-control" id="phone_number" placeholder="Telefoonnummer">
+                        <input type="tel" class="form-control" name="phone_number" placeholder="Vul een telefoonnummer in...">
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>

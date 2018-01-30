@@ -1,5 +1,5 @@
 
-var user_data = {
+let user_data = {
     room: -1,
     sensor: -1,
     contact: -1
@@ -10,12 +10,12 @@ $(function() {
     bindEvents();
     $('#wifi-form').submit(function(e) {
         e.preventDefault();
-        var helper = $('#wifi-form').find('small');
+        let helper = $('#wifi-form').find('small');
         helper.text('');
-        var button = $('#wifi-form').find('button');
+        let button = $('#wifi-form').find('button');
         button.find('i').show();
         button.find('span').text('');
-        var data = {
+        let data = {
             ssid: $('input[name=ssid]').val(),
             password: $('input[name=password]').val()
         };
@@ -31,17 +31,17 @@ $(function() {
     });
 });
 
-var nextColon = true;
-var monthNames = ["January", "February", "March", "April", "May", "June",
+let nextColon = true;
+let monthNames = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
 ];
-var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function updateTime() {
-    var date = new Date();
-    var colon = (nextColon = !nextColon) ? ':' : ' ';
-    var time = pad(date.getHours()) + colon + pad(date.getMinutes());
-    var day = date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
+    let date = new Date();
+    let colon = (nextColon = !nextColon) ? ':' : ' ';
+    let time = pad(date.getHours()) + colon + pad(date.getMinutes());
+    let day = date.getDate() + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear();
     $('#time').text(time);
     $('#date').text(days[date.getDay()]);
     $('#full-date').text(day);
@@ -59,31 +59,31 @@ function loop() {
 }
 
 function connectSmartCities() {
-    var config = {
+    let config = {
         apiKey: "AIzaSyBQGAOw3TcQOhHd6ZMnFX8HraBtCsKxB7o",
         authDomain: "smartcities-d2e38.firebaseapp.com",
         databaseURL: "https://smartcities-d2e38.firebaseio.com/",
         storageBucket: "gs://smartcities-d2e38.appspot.com"
     };
     firebase.initializeApp(config);
-    var auth = firebase.auth();
+    let auth = firebase.auth();
     auth.signInWithEmailAndPassword("admin@admin.nl", "adminadmin");
     auth.onAuthStateChanged(function(user) {
         if (user) {
-            var db = firebase.database().ref();
+            let db = firebase.database().ref();
             db.child("notifications").child(user.uid).on('value', function (snapshot) {
                 snapshot.forEach(function(v) {
-                    var object = v.val();
+                    let object = v.val();
                     console.log(object);
-                    for(var i in object.triggers) {
-                        var trigger = object.triggers[i];
+                    for(let i in object.triggers) {
+                        let trigger = object.triggers[i];
                         if (trigger.activated) {
-                            var message;
+                            let message;
                             if (i === 'wind_speed') {
                                 message = 'Windkracht ' + object.windPower + ' in de ' + object.windDirection.toLowerCase() + ' richting.';
                             }
-                            var type;
-                            var icon;
+                            let type;
+                            let icon;
                             switch(trigger.severity) {
                                 case 0:
                                     type = 'info';
@@ -117,12 +117,12 @@ function connectSmartCities() {
 function bindEvents() {
     $('#login-form').submit(function(e) {
         e.preventDefault();
-        var helper = $('#login-form').find('small');
+        let helper = $('#login-form').find('small');
         helper.text('');
-        var button = $('#login-form').find('button');
+        let button = $('#login-form').find('button');
         button.find('i').show();
         button.find('span').text('');
-        var data = {
+        let data = {
             email: $('input[name=email]').val(),
             password: $('input[name=password]').val()
         };
@@ -137,17 +137,17 @@ function bindEvents() {
         });
     });
     $('.header-dropdown ul').click(function() {
-        var menu = $(this).next();
-        var hidden = menu.css('display') === 'none';
+        let menu = $(this).next();
+        let hidden = menu.css('display') === 'none';
         if (hidden) {
             menu.show();
         } else {
             menu.hide();
         }
     });
-    var popup = $('#sensor-popup');
+    let popup = $('#sensor-popup');
     $('#settings-rooms').find('.mobile-list').on('click', 'li a', function() {
-        var id = parseInt($(this).parent().attr('value'));
+        let id = parseInt($(this).parent().attr('value'));
         user_data.room = id;
         $('#room-title').text('Kamer ' + id);
     });
@@ -186,11 +186,11 @@ function bindEvents() {
     });
 
     $('#container').on('pagebeforeshow', 'div[data-role="page"]', function() {
-        var id = $(this).attr('id').replace('#', '');
+        let id = $(this).attr('id').replace('#', '');
         console.log('switching to page=' + id);
         switch(id) {
             case 'home':
-                var city = 'Amersfoort';
+                let city = 'Amersfoort';
                 //TODO Refresh dahsboard via ajax
                 $.get('/api/devices/active', function(result) {
                     $('#sensor-count').text(result + ' Sensoren actief');
@@ -204,11 +204,11 @@ function bindEvents() {
                 break;
             case 'settings-rooms':
                 $.get('/api/rooms', function(json) {
-                    var list = $('#settings-rooms').find('.mobile-list');
+                    let list = $('#settings-rooms').find('.mobile-list');
                     list.empty();
-                    for(var i in json) {
-                        var room = json[i];
-                        var item = $('<li value="' + room.id + '"><a href="#settings-room" data-transition="slide"><i class="fa fa-bed"></i>' + room.name + '</a></li>');
+                    for(let i in json) {
+                        let room = json[i];
+                        let item = $('<li value="' + room.id + '"><a href="#settings-room" data-transition="slide"><i class="fa fa-bed"></i>' + room.name + '</a></li>');
                         list.append(item);
                     }
                     user_data.rooms = json;
@@ -217,17 +217,17 @@ function bindEvents() {
                 break;
             case 'settings-room':
                 $.get('/api/rooms/' + user_data.room + '/devices', function(json) {
-                    var list = $('#sensors');
+                    let list = $('#sensors');
                     list.empty();
-                    for(var i in json) {
-                        var sensor = json[i];
-                        var status = sensor.status === 1 ? 'active' : 'inactive';
-                        var item = $('<li value="' + sensor.id + '"><a data-transition="slide"><i class="fa fa-plug sensor-' + status + '"></i><span>' + sensor.name + '</span></a><input type="checkbox" data-role="flipswitch"' + (sensor.status === 1 ? ' checked=""' : '') + '></li>');
+                    for(let i in json) {
+                        let sensor = json[i];
+                        let status = sensor.status === 1 ? 'active' : 'inactive';
+                        let item = $('<li value="' + sensor.id + '"><a data-transition="slide"><i class="fa fa-plug sensor-' + status + '"></i><span>' + sensor.name + '</span></a><input type="checkbox" data-role="flipswitch"' + (sensor.status === 1 ? ' checked=""' : '') + '></li>');
                         list.append(item);
                         item.find('input').flipswitch();
                         item.find('input').change(function() {
-                            var input = $(this);
-                            var value = input.is(':checked');
+                            let input = $(this);
+                            let value = input.is(':checked');
                             user_data.sensor = parseInt(input.parent().parent().attr('value'));
                             $.ajax({
                                 url: '/api/rooms/' + user_data.room + '/devices/' + user_data.sensor,
@@ -254,21 +254,41 @@ function bindEvents() {
                 break;
             case 'settings-ice':
                 $.get('/api/ice', function(json) {
-                    var list = $('#settings-ice').find('.mobile-list');
+                    let list = $('#settings-ice').find('.mobile-list');
                     list.empty();
-                    for(var i in json) {
-                        var contact = json[i];
+                    for(let i in json) {
+                        let contact = json[i];
                         list.append('<li value="' + contact.id + '"><a href="#ice-contact" data-transition="slide"><i class="fa fa-address-book"></i>' + contact.name + '</a></li>');
                     }
+                    list.listview('refresh');
                 });
                 break;
             case 'ice-contact':
                 $.get('/api/ice/' + user_data.contact, function(contact) {
-                    console.log(contact);
-                    //TODO Fill form with contact data.
+                    let form = $('#ice-contact-form');
+                    form.find('input[name="name"]').val(contact.name);
+                    form.find('input[name="email"]').val(contact.email);
+                    form.find('input[name="phone_number"]').val(contact.phone_number);
                 });
                 break;
         }
+    });
+    $('#ice-contact-form').submit(function(e) {
+        console.log('hihi');
+        let form = $('#ice-contact-form');
+        e.preventDefault();
+        let data = {
+            name: form.find('input[name="name"]').val(),
+            email: form.find('input[name="email"]').val(),
+            phone_number: form.find('input[name="phone_number"]').val(),
+        };
+        $.post('/api/ice/' + user_data.contact, data, function(json) {
+            if (json.error) {
+
+            } else {
+                $('#ice-contact').find('.back-button').click();
+            }
+        });
     });
 }
 

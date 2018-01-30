@@ -42,6 +42,12 @@ class ICEDao(object):
 
     def delete_contact(self, contact_id):
         self.cur.execute('DELETE FROM ice WHERE id=?', (contact_id,))
+        self.conn.commit()
+        return True
+
+    def update(self, contact_id, name, email, phone_number):
+        self.cur.execute('UPDATE ice SET name=?, email=?, phone_number=? WHERE id=?', (name, email, phone_number, contact_id))
+        self.conn.commit()
         return True
 
     def __del__(self):
