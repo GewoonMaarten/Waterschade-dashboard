@@ -45,7 +45,7 @@ enum SensorTypes {
 // Contains state of the state machine default stat is startup
 States state = States::startup;
 
-// Sensortype for clearity
+// Sensortype for clarity
 SensorTypes sensortype = SensorTypes::level;
 
 //integer that contains the status of the wifi module
@@ -61,7 +61,6 @@ bool connect_wifi(){
   Serial.print(ssid);
   Serial.print(" with pass ");
   Serial.print(pass);
-  Serial.println("a");
   uint8_t i = 0;
   
   while (WiFi.status() != WL_CONNECTED && i++ < 50){
@@ -132,6 +131,9 @@ delay(1000);
 //Serial.println(state);
 if (state == States::idle){
  Serial.println("state = idle");
+ digitalWrite(bled_pin, LOW);
+ ESP.deepSleep(10e6);
+ 
 }
   
 if (state == States::startup){
@@ -220,14 +222,14 @@ if (state == States::connecting_to_network){
   if (connect_wifi()){
     state = States::sending_data;
   } else {
-    // state = States::warning
+    Serial.println("cant connect to network");
+    state = States::idle;
   }
 }
 
 if (state == States::sending_data){
   Serial.println("state = sending data");
   String tmp;
-  // Serial.println()
   if (trigger){
     tmp = sensorname + " 1";
   } else {
@@ -237,7 +239,17 @@ if (state == States::sending_data){
   if (client.connect(server, 5005)){
     Serial.println("actual sending");
     client.write(tmp.c_str());
+  } else {
+    Serial.println("cant connect to hub");
+   // state = States::error;
   }
   state = States::idle;
 }
+//if (state == States::error){
+//  for (int i = 0; i < 50; i++){
+//    digitalWrite(bled_pin, HIGH);
+//    delay(200);
+//    digitalWrite(bled_pint, LOW)
+//  }
+//}
 }
