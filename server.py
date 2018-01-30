@@ -1,7 +1,8 @@
-import application_logic.dashboard_controller.facade.service.Service
+import application_logic.dashboard_controller.facade.service
 import socket
 import fcntl
 import struct
+import sys
 
 # def get_ip_address(ifname):
 # 	sintern = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -20,6 +21,7 @@ BUFFER_SIZE = 20  # Normally 1024, but we want fast response
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((TCP_IP, TCP_PORT))
 s.listen(1)
+sys.stderr.write("waiting for data")
 while 1:
 	try:
 		conn, addr = s.accept()
