@@ -276,11 +276,11 @@ $(document).on('pageshow', '#new-devices-dialog', () => {
                             <b>Water Sensor</b>
                             <p>id: ${device['id']}</p>
                             <form id="form-device-${device['id']}">
-                                <select class="room-selector">
+                                <select class="room-selector ui-btn ui-icon-carat-d ui-btn-icon-right ui-corner-all ui-shadow">
                                     <option value="" selected disabled>Selecteer een kamer.</option>
                                     ${roomsSelect}
                                 </select>
-                                <input type="submit" class="room-save" value="save"/>
+                                <input type="submit" class="room-save  ui-btn ui-shadow ui-corner-all" value="save"/>
                             </form>
                             <hr />
                         </div>`
