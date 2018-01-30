@@ -1,7 +1,8 @@
 
 var user_data = {
     room: -1,
-    sensor: -1
+    sensor: -1,
+    contact: -1
 };
 
 $(function() {
@@ -159,6 +160,9 @@ function bindEvents() {
             popup.popup("open");
         });
     });
+    $('#settings-ice').on('click', 'li > a', function() {
+        user_data.contact = parseInt($(this).parent().attr('value'));
+    });
     popup.find('button').click(function(e) {
         $.ajax({
             url: '/api/rooms/' + user_data.room + '/devices/' + user_data.sensor,
@@ -246,6 +250,22 @@ function bindEvents() {
                         });
                     }
                     list.listview('refresh');
+                });
+                break;
+            case 'settings-ice':
+                $.get('/api/ice', function(json) {
+                    var list = $('#settings-ice').find('.mobile-list');
+                    list.empty();
+                    for(var i in json) {
+                        var contact = json[i];
+                        list.append('<li value="' + contact.id + '"><a href="#ice-contact" data-transition="slide"><i class="fa fa-address-book"></i>' + contact.name + '</a></li>');
+                    }
+                });
+                break;
+            case 'ice-contact':
+                $.get('/api/ice/' + user_data.contact, function(contact) {
+                    console.log(contact);
+                    //TODO Fill form with contact data.
                 });
                 break;
         }
