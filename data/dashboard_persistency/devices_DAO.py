@@ -55,6 +55,9 @@ class DevicesDAO(object):
         self.cur.execute('SELECT * FROM devices WHERE id = ?', (device_id,))
         return self.cur.fetchone()
 
+    def add_device(self, device_id, device_name):
+        self.cur.execute('INSERT INTO devices(id,status,name) VALUES (?,1,?)', (device_id,device_name))
+        
     def get_active_devices(self):
         self.cur.execute('SELECT * FROM devices WHERE status = ?', (1,))
         devices_list = []
