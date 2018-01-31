@@ -210,7 +210,9 @@ function bindEvents() {
     $('#settings-rooms').find('.mobile-list').on('click', 'li a', function() {
         let id = parseInt($(this).parent().attr('value'));
         user_data.room = id;
-        $('#room-title').text('Kamer ' + id);
+        $.get('/api/rooms/' + id, function(json) {
+            $('#room-title').text(json.name);
+        });
     });
     $('#sensors').on('click', 'li > a', function() {
         user_data.sensor = parseInt($(this).parent().attr('value'));

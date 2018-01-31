@@ -30,5 +30,10 @@ class RoomsDAO(object):
             # TODO implement logging - app.logger.Error(e)
             pass
 
+    def get_room(self, room_id):
+        self.cur.execute('SELECT * FROM rooms WHERE id = ?', (room_id,))
+        row = self.cur.fetchone()
+        return dict(zip(row.keys(), row))
+
     def __del__(self):
         self.conn.close()

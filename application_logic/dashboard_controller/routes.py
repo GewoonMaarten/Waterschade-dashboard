@@ -136,6 +136,12 @@ def get_rooms():
     return Response(data, mimetype='application/json')
 
 
+@app.route('/api/rooms/<int:room_id>')
+def get_room(room_id):
+    data = PERSISTENCY_SERVICE.get_room(room_id)
+    return Response(data, mimetype='application/json')
+
+
 @app.route('/api/rooms/<string:room>/devices')
 def get_room_devices(room):
     data = PERSISTENCY_SERVICE.get_devices_from_room(room)
