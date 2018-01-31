@@ -76,7 +76,7 @@ def temperature(city):
 @app.route('/api/devices/active')
 def active_devices():
     # TODO retrieve all active devices
-    data = 3
+    data = PERSISTENCY_SERVICE.get_active_devices()
     return Response(json.dumps(data), mimetype='application/json')
 
 

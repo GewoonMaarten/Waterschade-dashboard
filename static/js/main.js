@@ -7,6 +7,8 @@ let user_data = {
 
 $(function() {
     loop();
+    updateActiveSensors();
+    checkActiveSensors();
     bindEvents();
     $('#wifi-form').submit(function(e) {
         e.preventDefault();
@@ -37,6 +39,12 @@ let monthNames = ["January", "February", "March", "April", "May", "June",
 ];
 let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+function updateActiveSensors() {
+    $.get('/api/devices/active', function(json) {
+        $('#sensor-count').text(json.length + ' Sensoren actief');
+    });
+}
+
 function updateTime() {
     let date = new Date();
     let colon = (nextColon = !nextColon) ? ':' : ' ';
@@ -56,6 +64,13 @@ function loop() {
         updateTime();
         loop();
     }, 1000);
+}
+
+function checkActiveSensors() {
+    setTimeout(function() {
+        updateActiveSensors();
+        checkActiveSensors();
+    }, 5000)
 }
 
 function connectSmartCities() {
