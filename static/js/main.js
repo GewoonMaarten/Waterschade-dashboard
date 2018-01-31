@@ -6,10 +6,9 @@ let user_data = {
 };
 
 $(function() {
-    $.get('/api/devices/active', function(json) {
-        $('#sensor-count').text(json.length + ' Sensoren actief');
-    });
     loop();
+    updateActiveSensors();
+    checkActiveSensors();
     bindEvents();
     $('#wifi-form').submit(function(e) {
         e.preventDefault();
@@ -40,6 +39,12 @@ let monthNames = ["January", "February", "March", "April", "May", "June",
 ];
 let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
+function updateActiveSensors() {
+    $.get('/api/devices/active', function(json) {
+        $('#sensor-count').text(json.length + ' Sensoren actief');
+    });
+}
+
 function updateTime() {
     let date = new Date();
     let colon = (nextColon = !nextColon) ? ':' : ' ';
@@ -61,6 +66,13 @@ function loop() {
     }, 1000);
 }
 
+function checkActiveSensors() {
+    setTimeout(function() {
+        updateActiveSensors();
+        checkActiveSensors();
+    }, 5000)
+}
+
 function connectSmartCities() {
     let config = {
         apiKey: "AIzaSyBQGAOw3TcQOhHd6ZMnFX8HraBtCsKxB7o",
@@ -78,32 +90,63 @@ function connectSmartCities() {
                 snapshot.forEach(function(v) {
                     let object = v.val();
                     console.log(object);
+                    if (!object.triggers) {
+                        return;
+                    }
                     for(let i in object.triggers) {
                         let trigger = object.triggers[i];
                         if (trigger.activated) {
+                            let p;
                             let message;
-                            if (i === 'wind_speed') {
-                                message = 'Windkracht ' + object.windPower + ' in de ' + object.windDirection.toLowerCase() + ' richting.';
-                            }
                             let type;
                             let icon;
-                            switch(trigger.severity) {
-                                case 0:
-                                    type = 'info';
-                                    icon = 'fa fa-info-circle';
-                                    break;
-                                case 1:
-                                    type = 'warning';
-                                    icon = 'fa fa-exclamation-triangle';
-                                    break;
-                                case 2:
-                                    type = 'danger';
-                                    icon = 'fa fa-exclamation-circle';
-                                    break;
+                            if (i === 'wind_speed') {
+                                switch(trigger.severity) {
+                                    case 1:
+                                        p = 'zachte';
+                                        type = 'info';
+                                        icon = 'fa fa-info-circle';
+                                        break;
+                                    case 2:
+                                        p = 'stevige';
+                                        type = 'warning';
+                                        icon = 'fa fa-exclamation-triangle';
+                                        break;
+                                    case 3:
+                                        p = 'harde';
+                                        type = 'danger';
+                                        icon = 'fa fa-exclamation-circle';
+                                        break;
+                                }
+                                message = 'Er is een ' + p + ' wind met een kracht van ' + object.windPower + ' in de ' + object.windDirection.toLowerCase() + ' richting.';
+                            } else if (i === 'rain') {
+                                switch(trigger.severity) {
+                                    case 1:
+                                        p = 'miezert een beetje.';
+                                        type = 'info';
+                                        icon = 'fa fa-info-circle';
+                                        break;
+                                    case 2:
+                                        p = 'regent, haal de was binnen!';
+                                        type = 'warning';
+                                        icon = 'fa fa-exclamation-triangle';
+                                        break;
+                                    case 3:
+                                        p = 'regent hard, ramen en deuren gesloten houden!';
+                                        type = 'warning';
+                                        icon = 'fa fa-exclamation-triangle';
+                                        break;
+                                    case 4:
+                                        p = ' regent keihard, code rood! Niet naar buiten gaan!';
+                                        type = 'danger';
+                                        icon = 'fa fa-exclamation-circle';
+                                        break;
+                                }
+                                message = 'Het ' + p + '';
                             }
                             $.notify({
                                 title: v.key,
-                                message: message,
+                                message: '<br/>' + message,
                                 icon: icon
                             }, {
                                 type: type,

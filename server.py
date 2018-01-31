@@ -26,14 +26,15 @@ while 1:
 	try:
 		conn, addr = s.accept()
 		while 1:
-		    data = conn.recv(BUFFER_SIZE)
-		    if not data: break
-		sensorid, trigger = data.decode("utf-8").split(" ")
-
-		if mrHotchins.check_if_sensor_present(sensorid):
-			mrHotchins.add_new_device(sensorid)
-		if trigger:
-			mrHotchins.report_water_damage(sensorid)
-		conn.close()
+			data = conn.recv(BUFFER_SIZE)
+			if not data: 
+				break
+			sensorid, trigger = data.decode("utf-8").split(" ")
+			print(sensorid, trigger)
+			if mrHotchins.check_if_sensor_present(sensorid):
+				mrHotchins.add_new_device(sensorid)
+			if trigger:
+				mrHotchins.report_water_damage(sensorid)
+			conn.close()
 	except:
 		conn.close()
