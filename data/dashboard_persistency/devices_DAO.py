@@ -57,6 +57,8 @@ class DevicesDAO(object):
 
     def add_device(self, device_id, device_name):
         self.cur.execute('INSERT INTO devices(id,status,name) VALUES (?,1,?)', (device_id,device_name))
+        self.conn.commit()
+        return True
         
     def get_active_devices(self):
         self.cur.execute('SELECT * FROM devices WHERE status = ?', (1,))
@@ -67,11 +69,6 @@ class DevicesDAO(object):
         for row in rows:
             devices_list.append(dict(zip(row.keys(), row)))
         return devices_list
-
-    def add_device(self, device_id):
-        self.cur.execute('INSERT INTO devices(id, status) VALUES (?,1)', (device_id,))
-        self.conn.commit()
-        return True
 
     def get_all_devices_without_room(self):
         try:
