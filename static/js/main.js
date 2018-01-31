@@ -146,11 +146,12 @@ function connectSmartCities() {
                             }
                             $.notify({
                                 title: v.key,
-                                message: '<br/>' + message,
+                                message: '<br/>' + message + '</br><small>' + formatDate(new Date(object.apiDate)) + '</small>',
                                 icon: icon
                             }, {
                                 type: type,
-                                allow_dismiss: true
+                                allow_dismiss: true,
+                                delay: 0
                             });
                         }
                     }
@@ -158,6 +159,20 @@ function connectSmartCities() {
             });
         }
     });
+}
+
+function formatDate(date) {
+  let monthNames = [
+    "Januari", "Februari", "Maart",
+    "April", "Mei", "Juni", "Juli",
+    "Augustus", "September", "Oktober",
+    "November", "December"
+  ];
+  let day = date.getDate();
+  let monthIndex = date.getMonth();
+  let year = date.getFullYear();
+  let time = pad(date.getHours()) + ':' + pad(date.getMinutes());
+  return day + ' ' + monthNames[monthIndex] + ' ' + year + ' ' + time;
 }
 
 function bindEvents() {
@@ -184,7 +199,7 @@ function bindEvents() {
     });
     $('.header-dropdown ul').click(function() {
         let menu = $(this).next();
-        let hidden = menu.css('display') === 'none';
+         let hidden = menu.css('display') === 'none';
         if (hidden) {
             menu.show();
         } else {
