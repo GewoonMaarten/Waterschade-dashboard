@@ -52,6 +52,9 @@ class Service(object):
     def add_device(self, device_id, device_name):
         return self.devices_DAO.add_device(device_id, device_name)
 
+    def get_active_devices(self):
+        return self.devices_DAO.get_active_devices()
+
     def get_all_devices_without_room(self):
         return self.devices_DAO.get_all_devices_without_room()
 

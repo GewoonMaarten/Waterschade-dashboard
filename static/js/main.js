@@ -6,6 +6,9 @@ let user_data = {
 };
 
 $(function() {
+    $.get('/api/devices/active', function(json) {
+        $('#sensor-count').text(json.length + ' Sensoren actief');
+    });
     loop();
     bindEvents();
     $('#wifi-form').submit(function(e) {
