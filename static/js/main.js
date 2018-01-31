@@ -7,6 +7,7 @@ let user_data = {
 
 $(function() {
     loop();
+    updateActiveSensors();
     checkActiveSensors();
     bindEvents();
     $('#wifi-form').submit(function(e) {
