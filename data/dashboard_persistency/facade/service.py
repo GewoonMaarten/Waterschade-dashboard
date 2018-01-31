@@ -75,3 +75,6 @@ class Service(object):
 
     def update_ice(self, contact_id, name, email, phone_number):
         return json.dumps(self.ice_DAO.update(contact_id, name, email, phone_number))
+
+    def report_water_damage(self, device_id):
+        self.devices_DAO.report_water_damage(device_id)

@@ -13,7 +13,7 @@ class Service(object):
         PERSISTENCY_SERVICE.add_device(device_id=device_id, device_name=device_name)
 
     def report_water_damage(self, device_id):
-        pass
+        PERSISTENCY_SERVICE.report_water_damage(device_id)
 
     def check_if_sensor_present(self, device_id):
         exists = PERSISTENCY_SERVICE.get_device(device_id)

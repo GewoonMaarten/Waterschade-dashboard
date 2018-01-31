@@ -1,6 +1,8 @@
 import sqlite3
 from sqlite3 import Error
 import os
+import datetime
+import time
 
 
 class DevicesDAO(object):
@@ -83,6 +85,11 @@ class DevicesDAO(object):
             return devices_list
         except Error as e:
             pass
+
+    def report_water_damage(self, device_id):
+        date = datetime.datetime.now()
+        self.cur.execute('INSERT INTO water_damages(date, devices_id) VALUES(?,?)', (date, device_id))
+        self.conn.commit()
 
 
     def add_wifi_connection(self, ssid, password):
