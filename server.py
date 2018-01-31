@@ -1,4 +1,4 @@
-import application_logic.dashboard_controller.facade.service
+from application_logic.dashboard_controller.facade.service import Service as DBagent
 import socket
 import fcntl
 import struct
@@ -22,19 +22,24 @@ s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((TCP_IP, TCP_PORT))
 s.listen(1)
 sys.stderr.write("waiting for data")
+
+DBconnection = DBagent()
+
 while 1:
-	try:
-		conn, addr = s.accept()
-		while 1:
-			data = conn.recv(BUFFER_SIZE)
-			if not data: 
-				break
-			sensorid, trigger = data.decode("utf-8").split(" ")
-			print(sensorid, trigger)
-			if mrHotchins.check_if_sensor_present(sensorid):
-				mrHotchins.add_new_device(sensorid)
-			if trigger:
-				mrHotchins.report_water_damage(sensorid)
-			conn.close()
-	except:
+	conn, addr = s.accept()
+	while 1:
+		data = conn.recv(BUFFER_SIZE)
+		if not data: 
+			print("transmission recieved")
+			break
+		sensorid, trigger = data.decode("utf-8").split(" ")
+		print(sensorid, trigger)
+		if not DBconnection.check_if_sensor_present(sensorid):
+			print("adding sensor to database")
+			DBconnection.add_new_device(sensorid)
+		print("general check")
+		if trigger:
+			print("sensor has been triggered")
+			DBconection.report_water_damage(sensorid)
 		conn.close()
+		print("connection closed")
