@@ -38,8 +38,9 @@ while 1:
 			print("adding sensor to database")
 			DBconnection.add_new_device(sensorid)
 		print("general check")
-		if trigger:
+		if trigger is not "0":
+			print(trigger)
 			print("sensor has been triggered")
-			DBconection.report_water_damage(sensorid)
-		conn.close()
-		print("connection closed")
+			DBconnection.report_water_damage(sensorid)
+	conn.close()
+	print("connection closed")
