@@ -9,8 +9,8 @@ class Service(object):
     """Service for the sensor package to interact with"""
 
     def add_new_device(self, device_id, name=None):
-        device_name = "sensor 1" if name is not None else name
-        PERSISTENCY_SERVICE.add_device(device_id, device_name)
+        device_name = "sensor 1" if name is None else name
+        PERSISTENCY_SERVICE.add_device(device_id=device_id, device_name=device_name)
 
     def report_water_damage(self, device_id):
         pass
