@@ -1,3 +1,10 @@
+"""
+This file is used to define all routes in the dashboard. If 
+it start with /api than that route is used for the api and
+will return and json. The other routes will return an html 
+file.
+"""
+
 import json
 import flask
 import flask_login

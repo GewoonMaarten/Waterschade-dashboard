@@ -1,3 +1,7 @@
+"""
+The main file for running the dashboard server.
+"""
+
 import flask_login
 
 from application_logic.dashboard_controller import app
@@ -14,7 +18,6 @@ if __name__ == '__main__':
     login_manager = flask_login.LoginManager()
     login_manager.login_view = 'login'
     login_manager.init_app(app)
-
 
     @login_manager.user_loader
     def user_loader(email):
@@ -35,7 +38,8 @@ if __name__ == '__main__':
         user = User()
         user.id = email
 
-        # DO NOT ever store passwords in plaintext and always compare password
+        # DO NOT ever store passwords in plaintext 
+        #  always compare password
         # hashes using constant-time comparison!
         user.is_authenticated = request.form['password'] == persistency_service.get_user_by_email(email)['password']
 

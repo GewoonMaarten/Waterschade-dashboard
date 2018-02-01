@@ -1,3 +1,10 @@
+"""
+This is the scripts which listens to incoming messages for the connected 
+devices. When it recieves an message it will first check if its in the 
+database. if not, it will at it. if it is then it will report that is 
+has detected water damage. 
+"""
+
 from application_logic.dashboard_controller.facade.service import Service as DBagent
 import socket
 import fcntl
@@ -40,6 +47,6 @@ while 1:
 		print("general check")
 		if trigger:
 			print("sensor has been triggered")
-			DBconection.report_water_damage(sensorid)
+			DBconnection.report_water_damage(sensorid)
 		conn.close()
 		print("connection closed")

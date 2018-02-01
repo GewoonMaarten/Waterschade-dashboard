@@ -1,3 +1,8 @@
+"""
+This is an script which the server.py can use to get the Wifi 
+connection. It wil also generate an random string which in 
+turn can be given to newly discovered devices.
+"""
 import os
 import sqlite3
 import random

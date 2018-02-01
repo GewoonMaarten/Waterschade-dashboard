@@ -1,3 +1,7 @@
+"""
+This file runs the blecon.pl Perl scripts that activates the bluetooth pairing process.
+"""
+
 import RPi.GPIO as GPIO
 from subprocess import call
 
