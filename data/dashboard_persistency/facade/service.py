@@ -28,6 +28,9 @@ class Service(object):
     def get_rooms_as_json(self):
         return json.dumps(self.rooms_DAO.get_rooms())
 
+    def get_room(self, room_id):
+        return json.dumps(self.rooms_DAO.get_room(room_id))
+
     def get_devices_by_room_id_as_json(self, room_id):
         return json.dumps(self.rooms_DAO.get_devices_by_room_id(room_id))
 

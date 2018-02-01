@@ -94,7 +94,7 @@ def water_damages():
     return Response(json.dumps(damages), mimetype='application/json')
 
 
-@app.route('/api/rooms/<int:room_id>/devices/<int:device_id>', methods=['PUT'])
+@app.route('/api/rooms/<int:room_id>/devices/<string:device_id>', methods=['PUT'])
 def update_sensor_name(room_id, device_id):
     form = request.form
     response = {}
@@ -112,7 +112,7 @@ def update_sensor_name(room_id, device_id):
     return Response(json.dumps(response), mimetype='application/json')
 
 
-@app.route('/api/rooms/<int:room_id>/devices/<int:device_id>/name', methods=['GET'])
+@app.route('/api/rooms/<int:room_id>/devices/<string:device_id>/name', methods=['GET'])
 def get_device_name(room_id, device_id):
     name = PERSISTENCY_SERVICE.get_device_name(device_id)
     return Response(json.dumps(name), mimetype='application/json')
@@ -140,6 +140,12 @@ def get_new_devices():
 @app.route('/api/rooms')
 def get_rooms():
     data = PERSISTENCY_SERVICE.get_rooms_as_json()
+    return Response(data, mimetype='application/json')
+
+
+@app.route('/api/rooms/<int:room_id>')
+def get_room(room_id):
+    data = PERSISTENCY_SERVICE.get_room(room_id)
     return Response(data, mimetype='application/json')
 
 
