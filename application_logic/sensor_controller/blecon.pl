@@ -35,14 +35,19 @@ sub slurp{
   <$fh>
 }
 
-system("cd ../../\npython3 WifiService.py");
+system("python3 WifiService.py");
+#system("cd ../../\npython3 WifiService.py");
 
-my @rawding = slurp "test.txt";
+my @rawding = slurp "application_logic/sensor_controller/test.txt";
 
 my $text0 = substr $rawding[0], 0, -1;
 my $text1 = substr $rawding[1], 0, -1;
-my $cmd = "sudo sh -c 'wpa_passphrase $text0 $text1 > /etc/wpa_supplicant/wpa_supplicant.conf'";
-system($cmd)
+
+my $precmd = "sudo sh -c 'echo 'ctrl_interface=/var/run/wpa_supplicant\n' > /etc/wpa_supplicant/wpa_supplicant.conf'";
+system($precmd);
+
+my $cmd = "sudo sh -c 'wpa_passphrase $text0 $text1 >> /etc/wpa_supplicant/wpa_supplicant.conf'";
+system($cmd);
 
 my $ding = (join '', @rawding);
 say $ding;
@@ -63,7 +68,7 @@ $SIG{INT} = sub {
         say STDERR "\rACK!";
         kill KILL => $gatt_pid;
     } else {
-        say STDERR "\rInterrupt again to force quit.";
+       say STDERR "\rInterrupt again to force quit.";
         $really_kill = 1;
         close $gatt_in;
     }
@@ -76,7 +81,6 @@ say $gatt_in "connect";
 sleep(1);
 
 for (@hex_ding){
-
   say $gatt_in "char-write-cmd 0x0012 $_";
 }
 
