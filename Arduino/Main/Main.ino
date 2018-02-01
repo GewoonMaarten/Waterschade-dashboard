@@ -130,6 +130,7 @@ delay(1000);
 //Serial.print("Loop");
 //Serial.println(state);
 if (state == States::idle){
+ client.stop();
  Serial.println("state = idle");
  digitalWrite(bled_pin, LOW);
  ESP.deepSleep(10e6);
@@ -185,7 +186,6 @@ if (state == States::reading_eeprom){
   pass = Tdata.substring(point1 + 1, point2);
   //pass = "pizza321";
   sensorname = Tdata.substring(point2 + 1, point3);
-  Serial.println(pass.length());
     
   Serial.println("did the reading eeprom");
   state = States::reading_sensor;
