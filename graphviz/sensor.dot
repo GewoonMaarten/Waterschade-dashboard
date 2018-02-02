@@ -1,0 +1,45 @@
+digraph G {
+    rankdir = TB
+    graph[label=<<b>STD van de sensor state machine</b>>, bgcolor=white, ranksep=1.0]
+    node[shape=Mrecord, style=bold, color=grey20];
+    edge[style=solid, color=black];
+
+    #nodes
+    start[shape=point, width=.2]
+    startup
+    reading_bluetooth
+    reading_eeprom
+    reading_sensor
+    writing_eeprom
+    connecting_to_network
+    sending_data
+    idle
+    end[shape=point, width=.2]
+
+    #mergenodes
+    MN_Reeprom[shape=diamond, label=""]
+    MN_idle[shape=diamond, label=""]
+
+    #mergenodes connections
+    MN_Reeprom -> reading_eeprom[label="/String Tdata = Read_eeprom()"]
+    MN_idle -> idle[label="/client.stop()"]
+
+    #loopconnections
+    startup -> startup[label="/timeout--\ldelay(1)\l[timeout % 500 == 0] Toggle led"]
+    reading_sensor -> reading_sensor[label="[int i < 10]\l/val+=analogRead(sensor_pin)\l/delay(100)\l/i++\l"]
+
+    #connections
+    start -> startup[label="setup()\lloop()\l/timeout = 10000"]
+    startup -> MN_Reeprom[label="[timeout <= 0]"]
+    startup -> reading_bluetooth[label="[digitalRead(button_pin)]\l/bluetooth_data = ReadBluetooth()"]
+    reading_bluetooth -> MN_Reeprom[label="[else]"]
+    reading_bluetooth -> writing_eeprom[label="[bluetooth_data.length() > 0]\l/Write_EEPROM(bluetooth_data)"]
+    writing_eeprom -> MN_Reeprom
+    reading_eeprom -> reading_sensor[label="/Parse_Tdata\lssid = Tdata[0] -> indexof\\n\lpass = indexofprev\\n +1 -> indexof\\n\lsensorname = indexofpev\\n +1 -> inedxof\\n\l/int val = 0 /int i = 0\l"]
+    reading_sensor -> connecting_to_network[label="[sensortype = level]/if (val /10 > 300) trigger = true\l[sensortype = contact]/if (val > 5) trigger = true\l[else]trigger = false\l/connect_wifi()\l"]
+    connecting_to_network -> MN_idle[label="[else]"]
+    connecting_to_network -> sending_data[label="[connect_wifi == true]\l/client.connect()\l"]
+    sending_data -> MN_idle
+    idle -> end[label="/ESP.deepSleep(10e6)\l10e6 is 10 microseconden met 6 extra nullen er achter\lresulteert in 10 seconden\l"]
+
+}
