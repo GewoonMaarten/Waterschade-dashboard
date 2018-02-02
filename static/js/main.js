@@ -1,36 +1,21 @@
-
+/**
+ * Temporary user data.
+ * @type {{room: number, sensor: number, contact: number}}
+ */
 let user_data = {
     room: -1,
     sensor: -1,
     contact: -1
 };
 
+/**
+ * On initialize event.
+ */
 $(function() {
     loop();
     updateActiveSensors();
     checkActiveSensors();
     bindEvents();
-    $('#wifi-form').submit(function(e) {
-        e.preventDefault();
-        let helper = $('#wifi-form').find('small');
-        helper.text('');
-        let button = $('#wifi-form').find('button');
-        button.find('i').show();
-        button.find('span').text('');
-        let data = {
-            ssid: $('input[name=ssid]').val(),
-            password: $('input[name=password]').val()
-        };
-        $.post('/setup', data, function(json) {
-            if (json.error) {
-                helper.text(json.error);
-                button.find('i').hide();
-                button.find('span').text('Instellen');
-                return;
-            }
-            document.location.href = '/';
-        });
-    });
 });
 
 let nextColon = true;
@@ -59,6 +44,9 @@ function updateTime() {
     return number < 10 ? 0 + '' + number : number;
 }
 
+/**
+ * Start the time loop (for the :).
+ */
 function loop() {
     setTimeout(function () {
         updateTime();
@@ -66,6 +54,9 @@ function loop() {
     }, 1000);
 }
 
+/**
+ * Start the loop that checks for the amount of active sensors.
+ */
 function checkActiveSensors() {
     setTimeout(function() {
         updateActiveSensors();
@@ -73,6 +64,9 @@ function checkActiveSensors() {
     }, 5000)
 }
 
+/**
+ * Listen to the smart cities firebase database for notifications.
+ */
 function connectSmartCities() {
     let config = {
         apiKey: "AIzaSyBQGAOw3TcQOhHd6ZMnFX8HraBtCsKxB7o",
@@ -161,6 +155,9 @@ function connectSmartCities() {
     });
 }
 
+/**
+* Format the date.
+ */
 function formatDate(date) {
   let monthNames = [
     "Januari", "Februari", "Maart",
@@ -175,7 +172,11 @@ function formatDate(date) {
   return day + ' ' + monthNames[monthIndex] + ' ' + year + ' ' + time;
 }
 
+/**
+ * Bind HTML elements.
+ */
 function bindEvents() {
+    //login form
     $('#login-form').submit(function(e) {
         e.preventDefault();
         let helper = $('#login-form').find('small');
@@ -197,6 +198,29 @@ function bindEvents() {
             document.location.href = '/';
         });
     });
+    //setup wifi creds form
+    $('#wifi-form').submit(function(e) {
+        e.preventDefault();
+        let helper = $('#wifi-form').find('small');
+        helper.text('');
+        let button = $('#wifi-form').find('button');
+        button.find('i').show();
+        button.find('span').text('');
+        let data = {
+            ssid: $('input[name=ssid]').val(),
+            password: $('input[name=password]').val()
+        };
+        $.post('/setup', data, function(json) {
+            if (json.error) {
+                helper.text(json.error);
+                button.find('i').hide();
+                button.find('span').text('Instellen');
+                return;
+            }
+            document.location.href = '/';
+        });
+    });
+    //show/hide menu (3 dots top right on home)
     $('.header-dropdown ul').click(function() {
         let menu = $(this).next();
          let hidden = menu.css('display') === 'none';
@@ -206,6 +230,7 @@ function bindEvents() {
             menu.hide();
         }
     });
+    //sets room name when clicking on a room
     let popup = $('#sensor-popup');
     $('#settings-rooms').find('.mobile-list').on('click', 'li a', function() {
         let id = parseInt($(this).parent().attr('value'));
@@ -214,6 +239,7 @@ function bindEvents() {
             $('#room-title').text(json.name);
         });
     });
+    //opens the sensor popup to edit the name
     $('#sensors').on('click', 'li > a', function() {
         user_data.sensor = parseInt($(this).parent().attr('value'));
         $.get('/api/rooms/' + user_data.room + '/devices/' + user_data.sensor + '/name', function(json) {
@@ -223,9 +249,11 @@ function bindEvents() {
             popup.popup("open");
         });
     });
+    //sets global contact id when clicking on a contact in the ICE
     $('#settings-ice').on('click', 'li > a', function() {
         user_data.contact = parseInt($(this).parent().attr('value'));
     });
+    //button to post the sensor name form when edited
     popup.find('button').click(function(e) {
         $.ajax({
             url: '/api/rooms/' + user_data.room + '/devices/' + user_data.sensor,
@@ -247,7 +275,7 @@ function bindEvents() {
             }
         });
     });
-
+    //page switching handler
     $('#container').on('pagebeforeshow', 'div[data-role="page"]', function() {
         let id = $(this).attr('id').replace('#', '');
         console.log('switching to page=' + id);
@@ -336,6 +364,7 @@ function bindEvents() {
                 break;
         }
     });
+    //ice contact form post
     $('#ice-contact-form').submit(function(e) {
         console.log('hihi');
         let form = $('#ice-contact-form');
@@ -355,6 +384,7 @@ function bindEvents() {
     });
 }
 
+//this is for adding new sensors
 $(document).on('pageshow', '#new-devices-dialog', () => { 
     // Execute every 4 secondes for a total of 5 times.
     function call(limit, callback) {
