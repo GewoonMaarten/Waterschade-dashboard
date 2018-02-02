@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 
 # Copyright (c) 2017, Chris Smeele
+# Copyright (c) 2018, David de Jong
 # Console for output-only monitoring of a Bluetooth LE device.
 
 # Find the device MAC address as follows:
