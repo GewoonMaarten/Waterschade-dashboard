@@ -43,7 +43,11 @@ my @rawding = slurp "application_logic/sensor_controller/test.txt";
 my $text0 = substr $rawding[0], 0, -1;
 my $text1 = substr $rawding[1], 0, -1;
 
+<<<<<<< Updated upstream
 my $precmd = "sudo sh -c 'echo \"ctrl_interface=/var/run/wpa_supplicant\n\" > /etc/wpa_supplicant/wpa_supplicant.conf'";
+=======
+my $precmd = "sudo sh -c 'echo 'ctrl_interface=/var/run/wpa_supplicant\n' > /etc/wpa_supplicant/wpa_supplicant.conf'";
+>>>>>>> Stashed changes
 system($precmd);
 
 my $cmd = "sudo sh -c 'wpa_passphrase $text0 $text1 >> /etc/wpa_supplicant/wpa_supplicant.conf'";
